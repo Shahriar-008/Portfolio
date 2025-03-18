@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shahriar Hussain - Backend Engineer Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #f2f2f2;
+            --accent-color: #3776ab; /* Python blue */
+            --fastapi-color: #009688; /* FastAPI teal */
+            --django-color: #092e20; /* Django green */
+            --secondary-color: #222222;
+            --hover-color: #444444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 100px 0 50px;
+            text-align: center;
+        }
+        
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 10, 0.95);
+            padding: 20px 0;
+            z-index: 1000;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 15px;
+        }
+        
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 16px;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-color);
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        
+        .accent {
+            color: var(--accent-color);
+        }
+        
+        .fastapi {
+            color: var(--fastapi-color);
+        }
+        
+        .django {
+            color: var(--django-color);
+        }
+        
+        .section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 50px;
+        }
+        
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .skill-card {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            border-radius: 5px;
+            width: 200px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .skill-card h3 {
+            margin-bottom: 10px;
+        }
+        
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .project-content {
+            padding: 20px;
+        }
+        
+        .project-content h3 {
+            margin-bottom: 10px;
+        }
+        
+        .project-image {
+            height: 200px;
+            background-color: var(--hover-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .project-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .project-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .project-links a:hover {
+            color: var(--text-color);
+        }
+        
+        .experience {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .experience-item {
+            margin-bottom: 40px;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent-color);
+        }
+        
+        .experience-item h3 {
+            margin-bottom: 5px;
+        }
+        
+        .experience-item .company {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .experience-item .date {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .contact form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--secondary-color);
+            border: none;
+            border-radius: 5px;
+            color: var(--text-color);
+            font-family: 'Courier New', monospace;
+        }
+        
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--hover-color);
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: var(--text-color);
+            margin: 0 10px;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section {
+                padding: 50px 0;
+            }
+        }
+        
+        /* Terminal animation */
+        .terminal {
+            font-family: 'Courier New', monospace;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .terminal-close {
+            background-color: #ff5f56;
+        }
+        
+        .terminal-minimize {
+            background-color: #ffbd2e;
+        }
+        
+        .terminal-expand {
+            background-color: #27c93f;
+        }
+        
+        .terminal-content {
+            font-size: 14px;
+        }
+        
+        .terminal-line {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        
+        .terminal-prompt {
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+        
+        .terminal-text {
+            color: var(--text-color);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(40, end);
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        .blink {
+            animation: blink-cursor 0.8s step-end infinite;
+        }
+        
+        @keyframes blink-cursor {
+            from, to { color: transparent }
+            50% { color: var(--text-color) }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <section id="home" class="hero">
+        <h1>Shahriar Hussain</h1>
+        <p>Backend Engineer specializing in <span class="accent">Python</span>, <span class="fastapi">FastAPI</span> & <span class="accent">Django</span></p>
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-button terminal-close"></div>
+                <div class="terminal-button terminal-minimize"></div>
+                <div class="terminal-button terminal-expand"></div>
+            </div>
+            <div class="terminal-content">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-text">python --version</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-text">Python 3.11.4</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-text">fastapi --version</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-text">0.104.1</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-text">django-admin --version</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-text">4.2.1</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-text">uvicorn main:app --reload</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-text">INFO: Application startup complete</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-text">welcome to my portfolio <span class="blink">|</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-button terminal-close"></div>
+                    <div class="terminal-button terminal-minimize"></div>
+                    <div class="terminal-button terminal-expand"></div>
+                </div>
+                <div class="terminal-content">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span>
+                        <span class="terminal-text">cat about.txt</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-text">I'm a backend engineer with 5+ years of experience building scalable web applications.</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-text">My expertise lies in Python, FastAPI, and Django, with a focus on high-performance API development,</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-text">database optimization, and system architecture.</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-text">I'm passionate about clean code, testing, and performance optimization.</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-text">When I'm not coding, I contribute to open-source projects and write technical blogs.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills">
+                <div class="skill-card">
+                    <h3>Python</h3>
+                    <p>Advanced proficiency with Python 3.x, asyncio, and data processing libraries</p>
+                </div>
+                <div class="skill-card">
+                    <h3>FastAPI</h3>
+                    <p>Expert in building high-performance APIs with automatic documentation</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Django</h3>
+                    <p>Proficient with Django ORM, REST Framework, Channels, and Celery</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Databases</h3>
+                    <p>PostgreSQL, MongoDB, Redis, query optimization</p>
+                </div>
+                <div class="skill-card">
+                    <h3>DevOps</h3>
+                    <p>Docker, CI/CD, AWS, Kubernetes, Terraform</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Testing</h3>
+                    <p>pytest, unittest, TDD, BDD, mocking</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/api/placeholder/300/200" alt="API Service">
+                    </div>
+                    <div class="project-content">
+                        <h3>High-Performance API Service</h3>
+                        <p>FastAPI-based microservice handling 1M+ daily requests with sub-10ms response times and automatic documentation.</p>
+                        <div class="project-links">
+                            <a href="#">View Project</a>
+                            <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/api/placeholder/300/200" alt="E-commerce Platform">
+                    </div>
+                    <div class="project-content">
+                        <h3>E-commerce Platform</h3>
+                        <p>Django-based e-commerce backend with advanced inventory management and payment processing.</p>
+                        <div class="project-links">
+                            <a href="#">View Project</a>
+                            <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="/api/placeholder/300/200" alt="Data Pipeline">
+                    </div>
+                    <div class="project-content">
+                        <h3>Data Pipeline Framework</h3>
+                        <p>Asynchronous Python ETL framework for processing and analyzing large datasets using modern async/await patterns.</p>
+                        <div class="project-links">
+                            <a href="#">View Project</a>
+                            <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="experience">
+                <div class="experience-item">
+                    <h3>Senior Backend Engineer</h3>
+                    <div class="company">TechCorp Inc.</div>
+                    <div class="date">2023 - Present</div>
+                    <p>Lead the development of microservices architecture using FastAPI and Django. Implemented async processing that improved API performance by 60% and reduced server costs by 40%.</p>
+                </div>
+                <div class="experience-item">
+                    <h3>Backend Developer</h3>
+                    <div class="company">DataSystems Ltd.</div>
+                    <div class="date">2020 - 2023</div>
+                    <p>Developed and maintained RESTful APIs using FastAPI and Django REST Framework. Implemented asynchronous task processing, reducing response times by 40%.</p>
+                </div>
+                <div class="experience-item">
+                    <h3>Junior Python Developer</h3>
+                    <div class="company">StartupHub</div>
+                    <div class="date">2018 - 2020</div>
+                    <p>Worked on building web applications using Python frameworks. Contributed to open-source packages for API authentication and documentation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#">GitHub</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">Twitter</a>
+                <a href="#">Stack Overflow</a>
+            </div>
+            <p>&copy; 2025 Shahriar Hussain. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
