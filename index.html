@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shahriar Hussain - Backend Engineer | DevOps & Security</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #00ffff;
+            --text-dim: #00aaaa;
+            --accent-color: #00ffff;
+            --accent-glow: rgba(0, 255, 255, 0.4);
+            --secondary-color: #1a1a1a;
+            --tertiary-color: #0f0f0f;
+            --border-color: #00ffff33;
+            --hover-color: #003333;
+            --warning-color: #ffaa00;
+            --error-color: #ff3333;
+            --success-color: #00ffff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* CRT Scanline Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+        }
+        
+        /* Screen Flicker Effect */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9998;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+            animation: flicker 0.15s infinite;
+        }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 0.97; }
+            50% { opacity: 1; }
+        }
+        
+        /* Phosphor Glow */
+        .glow {
+            text-shadow: 
+                0 0 5px var(--accent-glow),
+                0 0 10px var(--accent-glow),
+                0 0 20px var(--accent-glow),
+                0 0 40px var(--accent-glow);
+        }
+        
+        .glow-subtle {
+            text-shadow: 
+                0 0 2px var(--accent-glow),
+                0 0 5px var(--accent-glow);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(13, 13, 13, 0.95);
+            padding: 15px 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 10px;
+        }
+        
+        nav ul li a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 8px 15px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        nav ul li a::before {
+            content: '> ';
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--accent-color);
+            border-color: var(--border-color);
+            background-color: var(--hover-color);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        
+        nav ul li a:hover::before {
+            opacity: 1;
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding-top: 60px;
+        }
+        
+        .ascii-art {
+            font-size: 8px;
+            line-height: 1;
+            color: var(--text-dim);
+            margin-bottom: 30px;
+            white-space: pre;
+            opacity: 0.7;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+        
+        .hero p {
+            font-size: 1rem;
+            max-width: 600px;
+            margin-bottom: 30px;
+            color: var(--text-dim);
+        }
+        
+        .accent {
+            color: var(--accent-color);
+        }
+        
+        .fastapi {
+            color: #00ffcc;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+        }
+        
+        .django {
+            color: #44ffff;
+            text-shadow: 0 0 10px rgba(68, 255, 255, 0.5);
+        }
+        
+        /* Section Styles */
+        .section {
+            padding: 100px 0;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 50px;
+            font-weight: 500;
+            letter-spacing: 3px;
+        }
+        
+        .section-title::before {
+            content: '## ';
+            color: var(--text-dim);
+        }
+        
+        /* Skills */
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .skill-card {
+            background-color: var(--secondary-color);
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            width: 220px;
+            text-align: left;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background-color: var(--accent-color);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+        
+        .skill-card h3 {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .skill-card h3::before {
+            content: '$ ';
+            color: var(--text-dim);
+        }
+        
+        .skill-card p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+        
+        /* Projects */
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .project-card {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .project-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+        
+        .project-header {
+            background-color: var(--tertiary-color);
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .project-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .project-dot.red { background-color: #ff5f56; }
+        .project-dot.yellow { background-color: #ffbd2e; }
+        .project-dot.green { background-color: #27c93f; }
+        
+        .project-title-bar {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .project-content {
+            padding: 20px;
+        }
+        
+        .project-content h3 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .project-content p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .project-links a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            padding: 5px 0;
+            border-bottom: 1px solid transparent;
+        }
+        
+        .project-links a::before {
+            content: '→ ';
+        }
+        
+        .project-links a:hover {
+            border-bottom-color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        
+        /* Experience */
+        .experience {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .experience-item {
+            margin-bottom: 40px;
+            padding: 25px;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            border-left: 3px solid var(--accent-color);
+            transition: all 0.3s;
+        }
+        
+        .experience-item:hover {
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        
+        .experience-item h3 {
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .experience-item .company {
+            color: var(--accent-color);
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .experience-item .company::before {
+            content: '@ ';
+        }
+        
+        .experience-item .date {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            opacity: 0.7;
+        }
+        
+        .experience-item .date::before {
+            content: '// ';
+        }
+        
+        .experience-item p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+        
+        /* Contact */
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .contact-terminal {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            text-align: left;
+        }
+        
+        .contact-line {
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        
+        .contact-line .prompt {
+            color: var(--text-dim);
+        }
+        
+        .contact-line a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .contact-line a:hover {
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .social-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            padding: 5px 10px;
+            border: 1px solid transparent;
+        }
+        
+        .social-links a::before {
+            content: '[';
+        }
+        
+        .social-links a::after {
+            content: ']';
+        }
+        
+        .social-links a:hover {
+            color: var(--accent-color);
+            border-color: var(--border-color);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        
+        footer p {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+        
+        /* Terminal Component */
+        .terminal {
+            font-family: 'Fira Code', monospace;
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: var(--tertiary-color);
+            border-bottom: 1px solid var(--border-color);
+            gap: 8px;
+        }
+        
+        .terminal-button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .terminal-close { background-color: #ff5f56; }
+        .terminal-minimize { background-color: #ffbd2e; }
+        .terminal-expand { background-color: #27c93f; }
+        
+        .terminal-title {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .terminal-content {
+            padding: 20px;
+            font-size: 14px;
+            min-height: 200px;
+        }
+        
+        .terminal-line {
+            display: flex;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .terminal-prompt {
+            color: var(--accent-color);
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        
+        .terminal-text {
+            color: var(--text-color);
+        }
+        
+        .terminal-output {
+            color: var(--text-dim);
+            padding-left: 20px;
+        }
+        
+        /* Typing Animation */
+        .typing {
+            overflow: hidden;
+            border-right: 2px solid var(--accent-color);
+            white-space: nowrap;
+            animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent-color) }
+        }
+        
+        .blink {
+            animation: blink-cursor 1s step-end infinite;
+        }
+        
+        @keyframes blink-cursor {
+            from, to { opacity: 0 }
+            50% { opacity: 1 }
+        }
+        
+        /* Loading Animation */
+        .loading-bar {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+        
+        .loading-bar span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            animation: loading 1.4s ease-in-out infinite;
+        }
+        
+        .loading-bar span:nth-child(1) { animation-delay: -0.32s; }
+        .loading-bar span:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes loading {
+            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            
+            nav ul li a {
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 0.9rem;
+            }
+            
+            .ascii-art {
+                font-size: 5px;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
+            }
+            
+            .skill-card {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .terminal {
+                margin: 0 10px;
+            }
+            
+            .terminal-content {
+                font-size: 12px;
+            }
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        
+        /* Selection */
+        ::selection {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-dim);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">home</a></li>
+            <li><a href="#about">about</a></li>
+            <li><a href="#skills">skills</a></li>
+            <li><a href="#projects">projects</a></li>
+            <li><a href="#experience">experience</a></li>
+            <li><a href="#contact">contact</a></li>
+        </ul>
+    </nav>
+    
+    <section id="home" class="hero">
+        <pre class="ascii-art">
+███████╗██╗  ██╗ █████╗ ██╗  ██╗██████╗ ██╗ █████╗ ██████╗ 
+██╔════╝██║  ██║██╔══██╗██║  ██║██╔══██╗██║██╔══██╗██╔══██╗
+███████╗███████║███████║███████║██████╔╝██║███████║██████╔╝
+╚════██║██╔══██║██╔══██║██╔══██║██╔══██╗██║██╔══██║██╔══██╗
+███████║██║  ██║██║  ██║██║  ██║██║  ██║██║██║  ██║██║  ██║
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+        </pre>
+        <h1 class="glow">Shahriar Hussain</h1>
+        <p>Backend Engineer specializing in <span class="accent glow-subtle">Python</span>, <span class="fastapi">DevOps</span> & <span class="django">Security</span></p>
+        
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-button terminal-close"></div>
+                <div class="terminal-button terminal-minimize"></div>
+                <div class="terminal-button terminal-expand"></div>
+                <span class="terminal-title">shahriar@secure-ops:~</span>
+            </div>
+            <div class="terminal-content">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">shahriar@ops:~$</span>
+                    <span class="terminal-text">kubectl get pods -n production</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">NAME                    READY   STATUS    RESTARTS</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">api-server-7d8f9c      1/1     Running   0</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">shahriar@ops:~$</span>
+                    <span class="terminal-text">docker scan api-server:latest</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">[+] No vulnerabilities found</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">shahriar@ops:~$</span>
+                    <span class="terminal-text">terraform apply -auto-approve</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">Apply complete! Resources: 12 added, 0 changed</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">shahriar@ops:~$</span>
+                    <span class="terminal-text">echo "Secure. Scalable. Automated."<span class="blink">_</span></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">[ scroll down ]</div>
+    </section>
+    
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title glow-subtle">ABOUT_ME</h2>
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="terminal-button terminal-close"></div>
+                    <div class="terminal-button terminal-minimize"></div>
+                    <div class="terminal-button terminal-expand"></div>
+                    <span class="terminal-title">cat about.txt</span>
+                </div>
+                <div class="terminal-content">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">shahriar@ops:~$</span>
+                        <span class="terminal-text">cat ./about/profile.yml</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">---</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">Backend engineer with 5+ years of experience building</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">secure, scalable infrastructure and APIs.</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output"></span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">→ Backend: Python, FastAPI, Django, PostgreSQL</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">→ DevOps: Docker, Kubernetes, Terraform, CI/CD</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">→ Security: OWASP, Pentesting, Secure SDLC, IAM</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output"></span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">Building secure pipelines | Automating everything</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">---</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">shahriar@ops:~$</span>
+                        <span class="terminal-text"><span class="blink">_</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title glow-subtle">TECH_STACK</h2>
+            <div class="skills">
+                <div class="skill-card">
+                    <h3>Python</h3>
+                    <p>Backend APIs, automation scripts, security tools, FastAPI & Django</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Container & Orchestration</h3>
+                    <p>Docker, Kubernetes, Helm, container security, microservices</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Infrastructure as Code</h3>
+                    <p>Terraform, Ansible, CloudFormation, GitOps, Pulumi</p>
+                </div>
+                <div class="skill-card">
+                    <h3>CI/CD Pipelines</h3>
+                    <p>GitHub Actions, GitLab CI, Jenkins, ArgoCD, secure pipelines</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Cloud Security</h3>
+                    <p>AWS/GCP hardening, IAM, secrets management, VPC, WAF</p>
+                </div>
+                <div class="skill-card">
+                    <h3>AppSec</h3>
+                    <p>OWASP Top 10, SAST/DAST, dependency scanning, secure coding</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Monitoring & Observability</h3>
+                    <p>Prometheus, Grafana, ELK Stack, Datadog, security logging</p>
+                </div>
+                <div class="skill-card">
+                    <h3>Databases</h3>
+                    <p>PostgreSQL, MongoDB, Redis, encryption at rest, backup strategies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title glow-subtle">PROJECTS</h2>
+            <div class="projects">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-dot red"></div>
+                        <div class="project-dot yellow"></div>
+                        <div class="project-dot green"></div>
+                        <span class="project-title-bar">question_gen.py</span>
+                    </div>
+                    <div class="project-content">
+                        <h3>Question Generation Python Script</h3>
+                        <p>Python script for automated question generation, leveraging NLP techniques to create questions from text content.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/Shahriar-008/question-generation-python-script" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-dot red"></div>
+                        <div class="project-dot yellow"></div>
+                        <div class="project-dot green"></div>
+                        <span class="project-title-bar">lot_size_calc.py</span>
+                    </div>
+                    <div class="project-content">
+                        <h3>Forex Lot Size Calculator</h3>
+                        <p>A tool for calculating optimal lot sizes in Forex trading based on risk management parameters and account balance.</p>
+                        <div class="project-links">
+                            <a href="https://github.com/Shahriar-008/Forex-Lot-Size-Calculator" target="_blank">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-dot red"></div>
+                        <div class="project-dot yellow"></div>
+                        <div class="project-dot green"></div>
+                        <span class="project-title-bar">prosno_io.py</span>
+                    </div>
+                    <div class="project-content">
+                        <h3>Prosno.io</h3>
+                        <p>A web application deployed on Render, providing interactive features and modern user experience.</p>
+                        <div class="project-links">
+                            <a href="https://prosno-io.onrender.com/" target="_blank">View Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title glow-subtle">WORK_EXPERIENCE</h2>
+            <div class="experience">
+                <div class="experience-item">
+                    <h3>Senior Backend & DevSecOps Engineer</h3>
+                    <div class="company">TechCorp Inc.</div>
+                    <div class="date">2023 - Present</div>
+                    <p>Lead secure infrastructure initiatives and backend development. Implemented zero-trust architecture, automated security scanning in CI/CD, and reduced deployment time by 70% while maintaining SOC2 compliance.</p>
+                </div>
+                <div class="experience-item">
+                    <h3>DevOps Engineer</h3>
+                    <div class="company">CloudScale Systems</div>
+                    <div class="date">2020 - 2023</div>
+                    <p>Built and maintained Kubernetes clusters for 50+ microservices. Implemented GitOps workflows, infrastructure as code, and container security scanning reducing vulnerabilities by 85%.</p>
+                </div>
+                <div class="experience-item">
+                    <h3>Backend Developer</h3>
+                    <div class="company">StartupHub</div>
+                    <div class="date">2018 - 2020</div>
+                    <p>Developed secure APIs with Python/FastAPI. Implemented OAuth2, rate limiting, and input validation. Set up initial CI/CD pipelines and containerized all services.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title glow-subtle">CONTACT</h2>
+            <div class="contact-info">
+                <div class="contact-terminal">
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">shahriar@ops:~$</span>
+                        <span class="terminal-text">cat contact.json</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">{</span>
+                    </div>
+                    <div class="contact-line">
+                        <span class="prompt">  "email":</span>
+                        <a href="mailto:shahriar@example.com">"shahriar@example.com"</a>
+                    </div>
+                    <div class="contact-line">
+                        <span class="prompt">  "github":</span>
+                        <a href="https://github.com/shahriar" target="_blank">"github.com/shahriar"</a>
+                    </div>
+                    <div class="contact-line">
+                        <span class="prompt">  "linkedin":</span>
+                        <a href="https://linkedin.com/in/shahriar" target="_blank">"linkedin.com/in/shahriar"</a>
+                    </div>
+                    <div class="contact-line">
+                        <span class="prompt">  "status":</span>
+                        <span style="color: var(--success-color);">"Open for DevSecOps & Backend roles"</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-output">}</span>
+                    </div>
+                    <div class="terminal-line" style="margin-top: 15px;">
+                        <span class="terminal-prompt">shahriar@ops:~$</span>
+                        <span class="terminal-text"><span class="blink">_</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/shahriar" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/shahriar" target="_blank">LinkedIn</a>
+                <a href="https://twitter.com/shahriar" target="_blank">Twitter</a>
+                <a href="https://dev.to/shahriar" target="_blank">Dev.to</a>
+            </div>
+            <p>/* &copy; 2025 Shahriar Hussain | Secure by design. Automated by default. */</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Add reveal animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-card, .project-card, .experience-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+
+        // Random glitch effect on title
+        const glitchText = document.querySelector('.hero h1');
+        setInterval(() => {
+            if (Math.random() > 0.95) {
+                glitchText.style.textShadow = `
+                    ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 rgba(255, 0, 0, 0.3),
+                    ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 rgba(0, 255, 0, 0.3),
+                    ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 rgba(0, 0, 255, 0.3)
+                `;
+                setTimeout(() => {
+                    glitchText.style.textShadow = '0 0 5px var(--accent-glow), 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow)';
+                }, 100);
+            }
+        }, 100);
+    </script>
+</body>
+</html>
