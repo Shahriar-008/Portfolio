@@ -404,6 +404,156 @@
             font-size: 0.9rem;
         }
         
+        /* Blog */
+        .blog-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background-color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 30px var(--accent-glow);
+            transform: translateY(-5px);
+        }
+
+        .blog-card-header {
+            background-color: var(--tertiary-color);
+            padding: 10px 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .blog-card-title-bar {
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .blog-card-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card-content h3 {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--accent-color);
+        }
+
+        .blog-card-content h3::before {
+            content: '# ';
+            color: var(--text-dim);
+        }
+
+        .blog-card-date {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+            opacity: 0.7;
+        }
+
+        .blog-card-date::before {
+            content: '// ';
+        }
+
+        .blog-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .blog-tag {
+            font-size: 0.75rem;
+            color: var(--accent-color);
+            border: 1px solid var(--border-color);
+            padding: 2px 8px;
+            background-color: var(--hover-color);
+        }
+
+        .blog-card-excerpt {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .blog-card-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            padding: 5px 0;
+            border-bottom: 1px solid transparent;
+            align-self: flex-start;
+        }
+
+        .blog-card-link::before {
+            content: '→ ';
+        }
+
+        .blog-card-link:hover {
+            border-bottom-color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .blog-visit-all {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .blog-visit-all a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            padding: 12px 30px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .blog-visit-all a::before {
+            content: '[ ';
+        }
+
+        .blog-visit-all a::after {
+            content: ' ]';
+        }
+
+        .blog-visit-all a:hover {
+            border-color: var(--accent-color);
+            background-color: var(--hover-color);
+            box-shadow: 0 0 20px var(--accent-glow);
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .blog-loading {
+            text-align: center;
+            color: var(--text-dim);
+            padding: 40px;
+            font-size: 0.9rem;
+        }
+
+        .blog-loading::before {
+            content: '> ';
+        }
+
         /* Contact */
         .contact-info {
             max-width: 600px;
@@ -689,6 +839,7 @@
             <li><a href="#skills">skills</a></li>
             <li><a href="#projects">projects</a></li>
             <li><a href="#experience">experience</a></li>
+            <li><a href="#blog">blog</a></li>
             <li><a href="#contact">contact</a></li>
         </ul>
     </nav>
@@ -818,6 +969,10 @@
                     <p>Terraform, Ansible, CloudFormation, GitOps, Pulumi</p>
                 </div>
                 <div class="skill-card">
+                    <h3>Linux</h3>
+                    <p>System hardening, shell scripting, networking, services, monitoring</p>
+                </div>
+                <div class="skill-card">
                     <h3>CI/CD Pipelines</h3>
                     <p>GitHub Actions, GitLab CI, Jenkins, ArgoCD, secure pipelines</p>
                 </div>
@@ -920,6 +1075,18 @@
         </div>
     </section>
     
+    <section id="blog" class="section">
+        <div class="container">
+            <h2 class="section-title glow-subtle">LATEST_BLOG_POSTS</h2>
+            <div class="blog-posts" id="blog-posts">
+                <div class="blog-loading" id="blog-loading">Fetching latest posts from shahariar.iam.bd...</div>
+            </div>
+            <div class="blog-visit-all">
+                <a href="https://shahariar.iam.bd/" target="_blank">Visit Full Blog</a>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title glow-subtle">CONTACT</h2>
@@ -934,15 +1101,15 @@
                     </div>
                     <div class="contact-line">
                         <span class="prompt">  "email":</span>
-                        <a href="mailto:shahriar@example.com">"shahriar@example.com"</a>
+                        <a href="mailto:shahriar.hj2022@gmail.com">"shahriar.hj2022@gmail.com"</a>
                     </div>
                     <div class="contact-line">
                         <span class="prompt">  "github":</span>
-                        <a href="https://github.com/shahriar" target="_blank">"github.com/shahriar"</a>
+                        <a href="https://github.com/Shahriar-008" target="_blank">"github.com/Shahriar-008"</a>
                     </div>
                     <div class="contact-line">
                         <span class="prompt">  "linkedin":</span>
-                        <a href="https://linkedin.com/in/shahriar" target="_blank">"linkedin.com/in/shahriar"</a>
+                        <a href="https://www.linkedin.com/in/md-shahriar-hussain-852002308/" target="_blank">"linkedin.com/in/md-shahriar-hussain-852002308"</a>
                     </div>
                     <div class="contact-line">
                         <span class="prompt">  "status":</span>
@@ -963,9 +1130,9 @@
     <footer>
         <div class="container">
             <div class="social-links">
-                <a href="https://github.com/shahriar" target="_blank">GitHub</a>
-                <a href="https://linkedin.com/in/shahriar" target="_blank">LinkedIn</a>
-                <a href="https://twitter.com/shahriar" target="_blank">Twitter</a>
+                <a href="https://github.com/Shahriar-008" target="_blank">GitHub</a>
+                <a href="https://www.linkedin.com/in/md-shahriar-hussain-852002308/" target="_blank">LinkedIn</a>
+                <a href="https://x.com/Shahriarhj" target="_blank">Twitter</a>
                 <a href="https://dev.to/shahriar" target="_blank">Dev.to</a>
             </div>
             <p>/* &copy; 2025 Shahriar Hussain | Secure by design. Automated by default. */</p>
@@ -997,12 +1164,123 @@
             });
         }, observerOptions);
 
-        document.querySelectorAll('.skill-card, .project-card, .experience-item').forEach(el => {
+        document.querySelectorAll('.skill-card, .project-card, .experience-item, .blog-card').forEach(el => {
             el.style.opacity = '0';
             el.style.transform = 'translateY(20px)';
             el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(el);
         });
+
+        // Fetch blog posts from RSS feed
+        async function fetchBlogPosts() {
+            const blogContainer = document.getElementById('blog-posts');
+            const loadingEl = document.getElementById('blog-loading');
+
+            // Fallback posts from the blog repo
+            const fallbackPosts = [
+                {
+                    title: 'Started Learning Python Today!',
+                    date: 'Jan 15, 2025',
+                    excerpt: 'Today marks an exciting milestone in my programming journey — I started learning Python! Python is one of the most popular and beginner-friendly programming languages...',
+                    url: 'https://shahariar.iam.bd/posts/started-learning-python/',
+                    categories: ['programming', 'learning'],
+                    file: 'python_journey.md'
+                },
+                {
+                    title: 'Welcome to My Blog',
+                    date: 'Jan 13, 2025',
+                    excerpt: 'Thank you for visiting my blog! I\'m excited to share this space with you where I\'ll be documenting my journey, insights, and learnings...',
+                    url: 'https://shahariar.iam.bd/posts/this-is-my-first/',
+                    categories: ['general', 'introduction'],
+                    file: 'welcome.md'
+                }
+            ];
+
+            function renderPosts(posts) {
+                loadingEl.style.display = 'none';
+                posts.forEach(post => {
+                    const card = document.createElement('div');
+                    card.className = 'blog-card';
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+                    const tagsHtml = (post.categories || []).map(tag =>
+                        `<span class="blog-tag">${tag}</span>`
+                    ).join('');
+
+                    card.innerHTML = `
+                        <div class="blog-card-header">
+                            <div class="project-dot red"></div>
+                            <div class="project-dot yellow"></div>
+                            <div class="project-dot green"></div>
+                            <span class="blog-card-title-bar">${post.file || 'post.md'}</span>
+                        </div>
+                        <div class="blog-card-content">
+                            <h3>${post.title}</h3>
+                            <div class="blog-card-date">${post.date}</div>
+                            <div class="blog-card-tags">${tagsHtml}</div>
+                            <p class="blog-card-excerpt">${post.excerpt}</p>
+                            <a href="${post.url}" target="_blank" class="blog-card-link">Read Post</a>
+                        </div>
+                    `;
+                    blogContainer.appendChild(card);
+
+                    // Trigger animation
+                    requestAnimationFrame(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    });
+                });
+            }
+
+            try {
+                // Try fetching RSS feed via rss2json API
+                const response = await fetch(
+                    'https://api.rss2json.com/v1/api.json?rss_url=' +
+                    encodeURIComponent('https://shahariar.iam.bd/feed.xml')
+                );
+                const data = await response.json();
+
+                if (data.status === 'ok' && data.items && data.items.length > 0) {
+                    const posts = data.items.slice(0, 6).map(item => {
+                        // Strip HTML tags from description
+                        const tmp = document.createElement('div');
+                        tmp.innerHTML = item.description || '';
+                        let excerpt = tmp.textContent || tmp.innerText || '';
+                        excerpt = excerpt.substring(0, 200).trim();
+                        if (excerpt.length >= 200) excerpt += '...';
+
+                        // Extract filename from link
+                        const urlParts = item.link.split('/');
+                        const slug = urlParts.filter(p => p).pop() || 'post';
+
+                        // Format date
+                        const dateObj = new Date(item.pubDate);
+                        const dateStr = dateObj.toLocaleDateString('en-US', {
+                            year: 'numeric', month: 'short', day: 'numeric'
+                        });
+
+                        return {
+                            title: item.title,
+                            date: dateStr,
+                            excerpt: excerpt,
+                            url: item.link,
+                            categories: item.categories || [],
+                            file: slug + '.md'
+                        };
+                    });
+                    renderPosts(posts);
+                } else {
+                    renderPosts(fallbackPosts);
+                }
+            } catch (error) {
+                console.log('RSS fetch failed, using fallback posts:', error);
+                renderPosts(fallbackPosts);
+            }
+        }
+
+        fetchBlogPosts();
 
         // Random glitch effect on title
         const glitchText = document.querySelector('.hero h1');
