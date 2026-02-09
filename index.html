@@ -230,6 +230,7 @@
             text-align: left;
             transition: all 0.3s;
             position: relative;
+            border-radius: 18px;
         }
         
         .skill-card::before {
@@ -283,6 +284,7 @@
             border: 1px solid var(--border-color);
             overflow: hidden;
             transition: all 0.3s;
+            border-radius: 18px;
         }
         
         .project-card:hover {
@@ -367,6 +369,7 @@
             border: 1px solid var(--border-color);
             border-left: 3px solid var(--accent-color);
             transition: all 0.3s;
+            border-radius: 18px;
         }
         
         .experience-item:hover {
@@ -418,6 +421,7 @@
             transition: all 0.3s;
             display: flex;
             flex-direction: column;
+            border-radius: 18px;
         }
 
         .blog-card:hover {
@@ -571,20 +575,48 @@
         .contact-line {
             margin-bottom: 15px;
             font-size: 0.95rem;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            flex-wrap: nowrap;
         }
         
         .contact-line .prompt {
             color: var(--text-dim);
+            white-space: nowrap;
         }
-        
-        .contact-line a {
+        .contact-item {
+            display: inline-block;
+            padding: 0.15em 0.4em;
+            border-radius: 4px;
+            transition: box-shadow 0.18s, background 0.18s, outline 0.18s, color 0.18s;
+            outline: none;
+            background: transparent;
             color: var(--accent-color);
-            text-decoration: none;
-            transition: all 0.3s;
+            white-space: nowrap;
+            max-width: 100%;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-        
-        .contact-line a:hover {
-            text-shadow: 0 0 10px var(--accent-glow);
+        .contact-item:hover,
+        .contact-item:focus {
+            box-shadow: 0 0 8px 2px var(--accent-color), 0 0 2px 1px var(--accent-color);
+            background: rgba(0, 255, 255, 0.12);
+            color: #00ffe7;
+            outline: 2px solid #00ffe7;
+            outline-offset: 2px;
+        }
+        .contact-item:focus {
+            outline-width: 3px;
+        }
+        @media (max-width: 768px) {
+            .contact-line { flex-wrap: wrap; }
+            .contact-item {
+                white-space: normal;
+                overflow: visible;
+                text-overflow: clip;
+            }
         }
         
         /* Footer */
@@ -841,6 +873,7 @@
             <li><a href="#experience">experience</a></li>
             <li><a href="#blog">blog</a></li>
             <li><a href="#contact">contact</a></li>
+            <li><a href="https://shahariar.iam.bd/CV/cv.pdf" target="_blank" rel="noopener">cv</a></li>
         </ul>
     </nav>
     
@@ -1101,19 +1134,19 @@
                     </div>
                     <div class="contact-line">
                         <span class="prompt">  "email":</span>
-                        <a href="mailto:shahriar.hj2022@gmail.com">"shahriar.hj2022@gmail.com"</a>
+                        <span class="contact-item" tabindex="0" aria-label="Email: shahriar.hj2022@gmail.com">"shahriar.hj2022@gmail.com"</span>
                     </div>
                     <div class="contact-line">
                         <span class="prompt">  "github":</span>
-                        <a href="https://github.com/Shahriar-008" target="_blank">"github.com/Shahriar-008"</a>
+                        <a class="contact-item" href="https://github.com/Shahriar-008" target="_blank" rel="noopener" aria-label="GitHub profile">"github.com/Shahriar-008"</a>
                     </div>
                     <div class="contact-line">
                         <span class="prompt">  "linkedin":</span>
-                        <a href="https://www.linkedin.com/in/md-shahriar-hussain-852002308/" target="_blank">"linkedin.com/in/md-shahriar-hussain-852002308"</a>
+                        <a class="contact-item" href="https://www.linkedin.com/in/md-shahriar-hussain-852002308/" target="_blank" rel="noopener" aria-label="LinkedIn profile">"linkedin.com/in/md-shahriar-hussain-852002308"</a>
                     </div>
                     <div class="contact-line">
                         <span class="prompt">  "status":</span>
-                        <span style="color: var(--success-color);">"Open for DevSecOps & Backend roles"</span>
+                        <span class="contact-item" tabindex="0" aria-label="Status: Open for DevSecOps and Backend roles" style="color: var(--success-color);">"Open for DevSecOps & Backend roles"</span>
                     </div>
                     <div class="terminal-line">
                         <span class="terminal-output">}</span>
@@ -1143,9 +1176,15 @@
         // Smooth scrolling for navigation
         document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (!href || !href.startsWith('#')) {
+                    return;
+                }
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
             });
         });
 
