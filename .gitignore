@@ -1,0 +1,7 @@
+# Ignore repository instruction files
+/.github/instructions/
+# Individual entries (optional)
+.github/instructions/a11y.instructions.md
+.github/instructions/html-css-style-color-guide.instructions.md
+.github/instructions/security-and-owasp.instructions.md
+.github/instructions/self-explanatory-code-commenting.instructions.md
