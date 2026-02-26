@@ -1,1237 +1,2198 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shahriar Hussain - Backend Engineer | DevOps & Security</title>
+    <title>Shahriar Hussain — Security-Focused Backend Engineer</title>
+    <meta name="description"
+        content="Security-focused backend engineer specializing in Python, DevOps, and infrastructure automation. Building secure, scalable backend systems with production-grade reliability.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <style>
+        /* ========================================
+           DESIGN TOKENS
+           ======================================== */
         :root {
-            --bg-color: #0d0d0d;
-            --text-color: #00ffff;
-            --text-dim: #00aaaa;
-            --accent-color: #00ffff;
-            --accent-glow: rgba(0, 255, 255, 0.4);
-            --secondary-color: #1a1a1a;
-            --tertiary-color: #0f0f0f;
-            --border-color: #00ffff33;
-            --hover-color: #003333;
-            --warning-color: #ffaa00;
-            --error-color: #ff3333;
-            --success-color: #00ffff;
+            --bg: #F6F7F9;
+            --surface: #FFFFFF;
+            --text-primary: #0F0F0F;
+            --text-secondary: #525252;
+            --border: #E8E8E8;
+            --accent: #000000;
+
+            --font-heading: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+            --max-width: 1100px;
+            --section-padding: 120px;
+            --radius: 4px;
         }
-        
-        * {
+
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         html {
             scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        
+
         body {
-            font-family: 'Fira Code', 'JetBrains Mono', 'Courier New', monospace;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: var(--font-body);
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 400;
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
         }
-        
-        /* CRT Scanline Effect */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
+
+        ::selection {
+            background-color: var(--accent);
+            color: var(--surface);
         }
-        
-        /* Screen Flicker Effect */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9998;
-            background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
-            animation: flicker 0.15s infinite;
+
+        img {
+            max-width: 100%;
+            display: block;
         }
-        
-        @keyframes flicker {
-            0%, 100% { opacity: 0.97; }
-            50% { opacity: 1; }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
         }
-        
-        /* Phosphor Glow */
-        .glow {
-            text-shadow: 
-                0 0 5px var(--accent-glow),
-                0 0 10px var(--accent-glow),
-                0 0 20px var(--accent-glow),
-                0 0 40px var(--accent-glow);
+
+        /* ========================================
+           TYPOGRAPHY
+           ======================================== */
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-heading);
+            line-height: 1.2;
+            font-weight: 600;
+            color: var(--text-primary);
         }
-        
-        .glow-subtle {
-            text-shadow: 
-                0 0 2px var(--accent-glow),
-                0 0 5px var(--accent-glow);
+
+        h1 {
+            font-size: clamp(40px, 5vw, 64px);
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            font-weight: 700;
         }
-        
+
+        h2 {
+            font-size: 32px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+
+        .text-small {
+            font-size: 14px;
+        }
+
+        /* ========================================
+           LAYOUT
+           ======================================== */
         .container {
-            max-width: 1200px;
+            max-width: var(--max-width);
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 24px;
         }
-        
-        /* Navigation */
+
+        section {
+            padding: var(--section-padding) 0;
+        }
+
+        .section-border {
+            border-top: 1px solid var(--border);
+        }
+
+        .section-label {
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
         nav {
             position: fixed;
             top: 0;
+            left: 0;
             width: 100%;
-            background-color: rgba(13, 13, 13, 0.95);
-            padding: 15px 0;
+            background-color: rgba(246, 247, 249, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
-            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
         }
-        
-        nav ul {
+
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
             display: flex;
-            justify-content: center;
-            list-style: none;
-            gap: 10px;
-        }
-        
-        nav ul li a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 14px;
-            padding: 8px 15px;
-            border: 1px solid transparent;
-            transition: all 0.3s;
-            position: relative;
-        }
-        
-        nav ul li a::before {
-            content: '> ';
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        nav ul li a:hover {
-            color: var(--accent-color);
-            border-color: var(--border-color);
-            background-color: var(--hover-color);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-        
-        nav ul li a:hover::before {
-            opacity: 1;
-        }
-        
-        /* Hero Section */
-        .hero {
-            display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            padding-top: 60px;
+            justify-content: space-between;
+            height: 64px;
         }
-        
-        .ascii-art {
-            font-size: 8px;
-            line-height: 1;
-            color: var(--text-dim);
-            margin-bottom: 30px;
-            white-space: pre;
-            opacity: 0.7;
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            font-weight: 600;
-            letter-spacing: 2px;
-        }
-        
-        .hero p {
-            font-size: 1rem;
-            max-width: 600px;
-            margin-bottom: 30px;
-            color: var(--text-dim);
-        }
-        
-        .accent {
-            color: var(--accent-color);
-        }
-        
-        .fastapi {
-            color: #00ffcc;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
-        }
-        
-        .django {
-            color: #44ffff;
-            text-shadow: 0 0 10px rgba(68, 255, 255, 0.5);
-        }
-        
-        /* Section Styles */
-        .section {
-            padding: 100px 0;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 1.5rem;
-            margin-bottom: 50px;
+
+        .nav-name {
+            font-family: var(--font-heading);
+            font-size: 14px;
             font-weight: 500;
-            letter-spacing: 3px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            letter-spacing: 1px;
         }
-        
-        .section-title::before {
-            content: '## ';
-            color: var(--text-dim);
-        }
-        
-        /* Skills */
-        .skills {
+
+        .nav-links {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
         }
-        
-        .skill-card {
-            background-color: var(--secondary-color);
-            padding: 25px;
-            border: 1px solid var(--border-color);
-            width: 220px;
-            text-align: left;
-            transition: all 0.3s;
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
             position: relative;
-            border-radius: 18px;
         }
-        
-        .skill-card::before {
+
+        .nav-links a::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: -2px;
             left: 0;
-            width: 3px;
-            height: 100%;
-            background-color: var(--accent-color);
-            opacity: 0;
-            transition: opacity 0.3s;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
         }
-        
-        .skill-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-color);
-            box-shadow: 0 0 20px var(--accent-glow);
+
+        .nav-links a:hover {
+            color: var(--text-primary);
         }
-        
-        .skill-card:hover::before {
-            opacity: 1;
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
-        
-        .skill-card h3 {
-            margin-bottom: 10px;
-            font-size: 1rem;
+
+        .nav-mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .nav-mobile-toggle span {
+            display: block;
+            width: 20px;
+            height: 1.5px;
+            background-color: var(--text-primary);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* ========================================
+           HERO
+           ======================================== */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: 100px;
+        }
+
+        .hero-content {
+            max-width: 720px;
+        }
+
+        .hero .hero-category {
+            font-family: var(--font-body);
+            font-size: 12px;
             font-weight: 500;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            opacity: 0.7;
+            margin-bottom: 14px;
+            line-height: 1;
         }
-        
-        .skill-card h3::before {
-            content: '$ ';
-            color: var(--text-dim);
+
+        .hero-name {
+            font-family: var(--font-heading);
+            font-size: clamp(28px, 2.5vw, 32px);
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            line-height: 1.15;
         }
-        
-        .skill-card p {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            line-height: 1.5;
-        }
-        
-        /* Projects */
-        .projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-        
-        .project-card {
-            background-color: var(--secondary-color);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: all 0.3s;
-            border-radius: 18px;
-        }
-        
-        .project-card:hover {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 30px var(--accent-glow);
-        }
-        
-        .project-header {
-            background-color: var(--tertiary-color);
-            padding: 10px 15px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .project-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-        
-        .project-dot.red { background-color: #ff5f56; }
-        .project-dot.yellow { background-color: #ffbd2e; }
-        .project-dot.green { background-color: #27c93f; }
-        
-        .project-title-bar {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            margin-left: 10px;
-        }
-        
-        .project-content {
-            padding: 20px;
-        }
-        
-        .project-content h3 {
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-        
-        .project-content p {
-            color: var(--text-dim);
-            font-size: 0.9rem;
+
+        .hero h1 {
             margin-bottom: 20px;
         }
-        
+
+        .hero-subtitle {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 55ch;
+            margin-bottom: 34px;
+        }
+
+        .hero-cta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 500;
+            padding: 12px 28px;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: var(--surface);
+            border-color: var(--accent);
+            box-shadow: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #1a1a1a;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-primary);
+            border-color: var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: #CCCCCC;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .btn-arrow {
+            font-size: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover .btn-arrow {
+            transform: translateX(3px);
+        }
+
+        /* ========================================
+           EXPERTISE
+           ======================================== */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .expertise-col {
+            padding: 40px 36px;
+            border-right: 1px solid var(--border);
+            background-color: var(--surface);
+        }
+
+        .expertise-col:last-child {
+            border-right: none;
+        }
+
+        .expertise-col h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .expertise-col-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .expertise-list {
+            list-style: none;
+        }
+
+        .expertise-list li {
+            font-size: 14px;
+            color: var(--text-primary);
+            padding: 10px 0;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .expertise-list li::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background-color: var(--text-secondary);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ========================================
+           PROJECTS
+           ======================================== */
+        .projects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .project-block {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background-color: var(--surface);
+            padding: 48px;
+            margin-bottom: -1px;
+            transition: background-color 0.25s ease;
+        }
+
+        .project-block:hover {
+            background-color: #FAFBFC;
+        }
+
+        .project-block-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 24px;
+        }
+
+        .project-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .project-summary {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .project-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 20px 0 24px;
+        }
+
+        .project-stack-tag {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            padding: 4px 12px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            letter-spacing: 0.3px;
+        }
+
+        .project-impact {
+            list-style: none;
+            margin-bottom: 28px;
+        }
+
+        .project-impact li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .project-impact li::before {
+            content: '—';
+            position: absolute;
+            left: 0;
+            color: var(--text-secondary);
+        }
+
         .project-links {
             display: flex;
-            gap: 20px;
+            gap: 24px;
         }
-        
-        .project-links a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-            padding: 5px 0;
-            border-bottom: 1px solid transparent;
-        }
-        
-        .project-links a::before {
-            content: '→ ';
-        }
-        
-        .project-links a:hover {
-            border-bottom-color: var(--accent-color);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-        
-        /* Experience */
-        .experience {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .experience-item {
-            margin-bottom: 40px;
-            padding: 25px;
-            background-color: var(--secondary-color);
-            border: 1px solid var(--border-color);
-            border-left: 3px solid var(--accent-color);
-            transition: all 0.3s;
-            border-radius: 18px;
-        }
-        
-        .experience-item:hover {
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-        
-        .experience-item h3 {
-            margin-bottom: 5px;
+
+        .project-link {
+            font-size: 14px;
             font-weight: 500;
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+            padding-bottom: 2px;
         }
-        
-        .experience-item .company {
-            color: var(--accent-color);
-            margin-bottom: 5px;
-            font-size: 0.95rem;
+
+        .project-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
         }
-        
-        .experience-item .company::before {
-            content: '@ ';
+
+        .project-link:hover::after {
+            width: 100%;
         }
-        
-        .experience-item .date {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-            margin-bottom: 15px;
-            opacity: 0.7;
+
+        .project-link-arrow {
+            font-size: 13px;
+            margin-left: 4px;
+            display: inline-block;
+            transition: transform 0.2s ease;
         }
-        
-        .experience-item .date::before {
-            content: '// ';
+
+        .project-link:hover .project-link-arrow {
+            transform: translateX(3px);
         }
-        
-        .experience-item p {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-        }
-        
-        /* Blog */
-        .blog-posts {
+
+        /* ========================================
+           BLOG
+           ======================================== */
+        .blog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
         }
 
         .blog-card {
-            background-color: var(--secondary-color);
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            transition: all 0.3s;
+            padding: 32px;
+            border-right: 1px solid var(--border);
+            background-color: var(--surface);
             display: flex;
             flex-direction: column;
-            border-radius: 18px;
+            transition: background-color 0.25s ease;
+        }
+
+        .blog-card:last-child {
+            border-right: none;
         }
 
         .blog-card:hover {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 30px var(--accent-glow);
-            transform: translateY(-5px);
-        }
-
-        .blog-card-header {
-            background-color: var(--tertiary-color);
-            padding: 10px 15px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .blog-card-title-bar {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            margin-left: 10px;
-        }
-
-        .blog-card-content {
-            padding: 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .blog-card-content h3 {
-            margin-bottom: 10px;
-            font-size: 1.05rem;
-            font-weight: 500;
-            color: var(--accent-color);
-        }
-
-        .blog-card-content h3::before {
-            content: '# ';
-            color: var(--text-dim);
+            background-color: #FAFBFC;
         }
 
         .blog-card-date {
-            font-size: 0.8rem;
-            color: var(--text-dim);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
             margin-bottom: 12px;
-            opacity: 0.7;
         }
 
-        .blog-card-date::before {
-            content: '// ';
+        .blog-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .blog-card h3 a {
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .blog-card h3 a:hover {
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
         .blog-card-tags {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 15px;
+            gap: 6px;
+            margin-bottom: 14px;
         }
 
-        .blog-tag {
-            font-size: 0.75rem;
-            color: var(--accent-color);
-            border: 1px solid var(--border-color);
+        .blog-card-tag {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-secondary);
             padding: 2px 8px;
-            background-color: var(--hover-color);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            letter-spacing: 0.3px;
         }
 
         .blog-card-excerpt {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-            margin-bottom: 20px;
+            font-size: 14px;
             line-height: 1.6;
+            color: var(--text-secondary);
             flex: 1;
+            margin-bottom: 20px;
         }
 
         .blog-card-link {
-            color: var(--accent-color);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
             text-decoration: none;
-            font-size: 0.85rem;
-            transition: all 0.3s;
-            padding: 5px 0;
-            border-bottom: 1px solid transparent;
+            position: relative;
             align-self: flex-start;
+            padding-bottom: 2px;
         }
 
-        .blog-card-link::before {
-            content: '→ ';
+        .blog-card-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
         }
 
-        .blog-card-link:hover {
-            border-bottom-color: var(--accent-color);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .blog-visit-all {
-            text-align: center;
-            margin-top: 40px;
-        }
-
-        .blog-visit-all a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-size: 0.95rem;
-            padding: 12px 30px;
-            border: 1px solid var(--border-color);
-            transition: all 0.3s;
-            display: inline-block;
-        }
-
-        .blog-visit-all a::before {
-            content: '[ ';
-        }
-
-        .blog-visit-all a::after {
-            content: ' ]';
-        }
-
-        .blog-visit-all a:hover {
-            border-color: var(--accent-color);
-            background-color: var(--hover-color);
-            box-shadow: 0 0 20px var(--accent-glow);
-            text-shadow: 0 0 10px var(--accent-glow);
+        .blog-card-link:hover::after {
+            width: 100%;
         }
 
         .blog-loading {
             text-align: center;
-            color: var(--text-dim);
-            padding: 40px;
-            font-size: 0.9rem;
+            padding: 60px 24px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            grid-column: 1 / -1;
         }
 
-        .blog-loading::before {
-            content: '> ';
+        .blog-visit-all {
+            margin-top: 32px;
         }
 
-        /* Contact */
-        .contact-info {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: center;
-        }
-        
-        .contact-terminal {
-            background-color: var(--secondary-color);
-            border: 1px solid var(--border-color);
-            padding: 30px;
-            text-align: left;
-        }
-        
-        .contact-line {
-            margin-bottom: 15px;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            flex-wrap: nowrap;
-        }
-        
-        .contact-line .prompt {
-            color: var(--text-dim);
-            white-space: nowrap;
-        }
-        .contact-item {
-            display: inline-block;
-            padding: 0.15em 0.4em;
-            border-radius: 4px;
-            transition: box-shadow 0.18s, background 0.18s, outline 0.18s, color 0.18s;
-            outline: none;
-            background: transparent;
-            color: var(--accent-color);
-            white-space: nowrap;
-            max-width: 100%;
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .contact-item:hover,
-        .contact-item:focus {
-            box-shadow: 0 0 8px 2px var(--accent-color), 0 0 2px 1px var(--accent-color);
-            background: rgba(0, 255, 255, 0.12);
-            color: #00ffe7;
-            outline: 2px solid #00ffe7;
-            outline-offset: 2px;
-        }
-        .contact-item:focus {
-            outline-width: 3px;
-        }
-        @media (max-width: 768px) {
-            .contact-line { flex-wrap: wrap; }
-            .contact-item {
-                white-space: normal;
-                overflow: visible;
-                text-overflow: clip;
-            }
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--secondary-color);
-            padding: 30px 0;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-        
-        .social-links a {
-            color: var(--text-dim);
+        .blog-visit-all a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
             text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border: 1px solid transparent;
+            position: relative;
+            padding-bottom: 2px;
         }
-        
-        .social-links a::before {
-            content: '[';
+
+        .blog-visit-all a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
         }
-        
-        .social-links a::after {
-            content: ']';
+
+        .blog-visit-all a:hover::after {
+            width: 100%;
         }
-        
-        .social-links a:hover {
-            color: var(--accent-color);
-            border-color: var(--border-color);
-            text-shadow: 0 0 10px var(--accent-glow);
+
+        /* ========================================
+           BEYOND CODE — TERMINAL MODULE
+           ======================================== */
+        .ecosystem-section {
+            padding: var(--section-padding) 0;
         }
-        
-        footer p {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-        
-        /* Terminal Component */
-        .terminal {
-            font-family: 'Fira Code', monospace;
-            max-width: 700px;
-            margin: 0 auto;
-            background-color: var(--secondary-color);
-            border: 1px solid var(--border-color);
+
+        .ecosystem-terminal {
+            --eco-bg: #111111;
+            --eco-header: #151515;
+            --eco-text: #EAEAEA;
+            --eco-muted: #B8B8B8;
+            --eco-dim: #888888;
+            --eco-border: rgba(255, 255, 255, 0.08);
+            --fin-speed: 1.8s;
+            background-color: var(--eco-bg);
+            border-radius: var(--radius);
             overflow: hidden;
+            border: 1px solid var(--eco-border);
+            max-width: 960px;
+            margin: 0 auto;
         }
-        
-        .terminal-header {
+
+        .ecosystem-header {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
-            background-color: var(--tertiary-color);
-            border-bottom: 1px solid var(--border-color);
+            padding: 12px 16px;
+            background-color: var(--eco-header);
+            border-bottom: 1px solid var(--eco-border);
             gap: 8px;
         }
-        
-        .terminal-button {
-            width: 12px;
-            height: 12px;
+
+        .eco-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
+            background-color: #333;
         }
-        
-        .terminal-close { background-color: #ff5f56; }
-        .terminal-minimize { background-color: #ffbd2e; }
-        .terminal-expand { background-color: #27c93f; }
-        
-        .terminal-title {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            margin-left: 10px;
+
+        .ecosystem-header-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--eco-dim);
+            margin-left: 8px;
+            letter-spacing: 0.2px;
         }
-        
-        .terminal-content {
-            padding: 20px;
-            font-size: 14px;
-            min-height: 200px;
+
+        .ecosystem-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 380px;
         }
-        
-        .terminal-line {
+
+        .ecosystem-text {
+            padding: 36px 32px;
+            font-family: 'IBM Plex Mono', monospace;
             display: flex;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: center;
         }
-        
-        .terminal-prompt {
-            color: var(--accent-color);
-            margin-right: 10px;
-            white-space: nowrap;
+
+        .eco-prompt {
+            font-size: 13px;
+            color: var(--eco-muted);
+            margin-bottom: 20px;
         }
-        
-        .terminal-text {
-            color: var(--text-color);
+
+        .eco-prompt span {
+            color: var(--eco-text);
         }
-        
-        .terminal-output {
-            color: var(--text-dim);
-            padding-left: 20px;
+
+        .eco-line {
+            font-size: 13px;
+            line-height: 2;
+            color: var(--eco-muted);
         }
-        
-        /* Typing Animation */
-        .typing {
+
+        .eco-line strong {
+            color: var(--eco-text);
+            font-weight: 500;
+        }
+
+        .eco-comment {
+            font-size: 12px;
+            color: var(--eco-dim);
+            margin-top: 24px;
+            font-style: italic;
+            line-height: 1.6;
+            opacity: 0.6;
+        }
+
+        .eco-cmd {
+            font-size: 13px;
+            color: var(--eco-muted);
+            margin-top: 20px;
+        }
+
+        .eco-cmd span {
+            color: var(--eco-text);
+        }
+
+        .eco-cmd-output {
+            font-size: 12px;
+            color: var(--eco-dim);
+            margin-top: 4px;
+        }
+
+        .ecosystem-visual {
+            position: relative;
             overflow: hidden;
-            border-right: 2px solid var(--accent-color);
-            white-space: nowrap;
-            animation: typing 2s steps(30, end), blink-caret 0.75s step-end infinite;
+            border-left: 1px solid var(--eco-border);
+            min-height: 380px;
         }
-        
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-        
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--accent-color) }
-        }
-        
-        .blink {
-            animation: blink-cursor 1s step-end infinite;
-        }
-        
-        @keyframes blink-cursor {
-            from, to { opacity: 0 }
-            50% { opacity: 1 }
-        }
-        
-        /* Loading Animation */
-        .loading-bar {
-            display: flex;
-            gap: 5px;
-            margin: 10px 0;
-        }
-        
-        .loading-bar span {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent-color);
-            animation: loading 1.4s ease-in-out infinite;
-        }
-        
-        .loading-bar span:nth-child(1) { animation-delay: -0.32s; }
-        .loading-bar span:nth-child(2) { animation-delay: -0.16s; }
-        
-        @keyframes loading {
-            0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
-            40% { opacity: 1; transform: scale(1); }
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav ul {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-            
-            nav ul li a {
-                font-size: 12px;
-                padding: 6px 10px;
-            }
-            
-            .hero h1 {
-                font-size: 1.8rem;
-            }
-            
-            .hero p {
-                font-size: 0.9rem;
-            }
-            
-            .ascii-art {
-                font-size: 5px;
-            }
-            
-            .section {
-                padding: 60px 0;
-            }
-            
-            .section-title {
-                font-size: 1.2rem;
-            }
-            
-            .skill-card {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .terminal {
-                margin: 0 10px;
-            }
-            
-            .terminal-content {
-                font-size: 12px;
-            }
-        }
-        
-        /* Scroll indicator */
-        .scroll-indicator {
+
+        .ecosystem-visual svg {
+            width: 100%;
+            height: 100%;
             position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            animation: bounce 2s infinite;
+            top: 0;
+            left: 0;
         }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
+
+        /* ---- Ecosystem Animations ---- */
+
+        /* Fish group — all transforms driven by JS via rAF */
+        #eco-fish {
+            will-change: transform;
         }
-        
-        /* Selection */
-        ::selection {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
+
+        /* Ensure all child fin/tail elements use their own bounding box for transform-origin */
+        .eco-fish-tail,
+        .eco-fish-dorsal,
+        .eco-fish-pectoral,
+        .eco-fish-ventral {
+            transform-box: fill-box;
         }
-        
-        /* Scrollbar */
+
+        /* Tail flowing — smooth wave without scale to prevent detachment */
+        @keyframes eco-tail {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(4deg);
+            }
+
+            50% {
+                transform: rotate(-3deg);
+            }
+
+            75% {
+                transform: rotate(2deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .eco-fish-tail {
+            animation: eco-tail var(--fin-speed, 1.8s) ease-in-out infinite;
+            transform-origin: 100% 50%;
+        }
+
+        /* Dorsal fin wave */
+        @keyframes eco-dorsal {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            35% {
+                transform: rotate(-5deg);
+            }
+
+            65% {
+                transform: rotate(2deg);
+            }
+        }
+
+        .eco-fish-dorsal {
+            animation: eco-dorsal calc(var(--fin-speed, 1.8s) * 1.3) ease-in-out infinite;
+            transform-origin: 80% 100%;
+        }
+
+        /* Pectoral fin flutter — faster */
+        @keyframes eco-pectoral {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            30% {
+                transform: rotate(10deg);
+            }
+
+            60% {
+                transform: rotate(-3deg);
+            }
+        }
+
+        .eco-fish-pectoral {
+            animation: eco-pectoral calc(var(--fin-speed, 1.8s) * 0.6) ease-in-out infinite;
+            transform-origin: 100% 20%;
+        }
+
+        /* Ventral / anal fin flowing */
+        @keyframes eco-ventral {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            40% {
+                transform: rotate(4deg);
+            }
+
+            70% {
+                transform: rotate(-2deg);
+            }
+        }
+
+        .eco-fish-ventral {
+            animation: eco-ventral calc(var(--fin-speed, 1.8s) * 1.2) ease-in-out infinite;
+            transform-origin: 10% 0%;
+        }
+
+        /* Plant sway — gentle */
+        @keyframes eco-sway-1 {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(0.8deg);
+            }
+        }
+
+        @keyframes eco-sway-2 {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(-0.6deg);
+            }
+        }
+
+        @keyframes eco-sway-3 {
+
+            0%,
+            100% {
+                transform: rotate(0.3deg);
+            }
+
+            50% {
+                transform: rotate(-0.5deg);
+            }
+        }
+
+        .eco-plant-1 {
+            animation: eco-sway-1 9s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        .eco-plant-2 {
+            animation: eco-sway-2 8s ease-in-out infinite 0.5s;
+            transform-origin: bottom center;
+        }
+
+        .eco-plant-3 {
+            animation: eco-sway-3 10s ease-in-out infinite 1s;
+            transform-origin: bottom center;
+        }
+
+        .eco-plant-4 {
+            animation: eco-sway-1 8.5s ease-in-out infinite 2s;
+            transform-origin: bottom center;
+        }
+
+        .eco-plant-5 {
+            animation: eco-sway-2 9.5s ease-in-out infinite 1.5s;
+            transform-origin: bottom center;
+        }
+
+        .eco-plant-6 {
+            animation: eco-sway-3 8s ease-in-out infinite 0.8s;
+            transform-origin: bottom center;
+        }
+
+        /* Pearling bubbles */
+        @keyframes eco-pearl-1 {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.7;
+            }
+
+            30% {
+                transform: translate(2px, -25px) scale(0.9);
+                opacity: 0.55;
+            }
+
+            60% {
+                transform: translate(-1px, -55px) scale(0.7);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: translate(1px, -90px) scale(0.4);
+                opacity: 0;
+            }
+        }
+
+        @keyframes eco-pearl-2 {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.65;
+            }
+
+            35% {
+                transform: translate(-2px, -22px) scale(0.85);
+                opacity: 0.5;
+            }
+
+            65% {
+                transform: translate(1.5px, -52px) scale(0.6);
+                opacity: 0.25;
+            }
+
+            100% {
+                transform: translate(-1px, -85px) scale(0.3);
+                opacity: 0;
+            }
+        }
+
+        @keyframes eco-pearl-3 {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.6;
+            }
+
+            40% {
+                transform: translate(1px, -28px) scale(0.8);
+                opacity: 0.35;
+            }
+
+            100% {
+                transform: translate(-2px, -75px) scale(0.35);
+                opacity: 0;
+            }
+        }
+
+        .eco-bubble-1 {
+            animation: eco-pearl-1 5.2s ease-out infinite;
+        }
+
+        .eco-bubble-2 {
+            animation: eco-pearl-2 6.4s ease-out infinite 1.8s;
+        }
+
+        .eco-bubble-3 {
+            animation: eco-pearl-3 5.8s ease-out infinite 3.2s;
+        }
+
+        .eco-bubble-4 {
+            animation: eco-pearl-1 4.6s ease-out infinite 2.5s;
+        }
+
+        .eco-bubble-5 {
+            animation: eco-pearl-2 7s ease-out infinite 4.2s;
+        }
+
+        .eco-bubble-6 {
+            animation: eco-pearl-3 5.3s ease-out infinite 0.8s;
+        }
+
+        .eco-bubble-7 {
+            animation: eco-pearl-1 6.8s ease-out infinite 5.5s;
+        }
+
+        .eco-bubble-8 {
+            animation: eco-pearl-2 5.5s ease-out infinite 6.8s;
+        }
+
+        .eco-bubble-9 {
+            animation: eco-pearl-3 7.5s ease-out infinite 2.1s;
+        }
+
+        /* Pause all animations when off-screen */
+        .ecosystem-terminal.paused .eco-fish-tail,
+        .ecosystem-terminal.paused .eco-fish-dorsal,
+        .ecosystem-terminal.paused .eco-fish-pectoral,
+        .ecosystem-terminal.paused .eco-fish-ventral,
+        .ecosystem-terminal.paused [class^='eco-plant-'],
+        .ecosystem-terminal.paused [class^='eco-bubble-'] {
+            animation-play-state: paused;
+        }
+
+        /* ========================================
+           ABOUT
+           ======================================== */
+        .about-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .about-text p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-text strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .about-sidebar {
+            border-left: 1px solid var(--border);
+            padding-left: 40px;
+        }
+
+        .about-sidebar h3 {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .about-sidebar-list {
+            list-style: none;
+        }
+
+        .about-sidebar-list li {
+            font-size: 14px;
+            color: var(--text-secondary);
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-sidebar-list li:last-child {
+            border-bottom: none;
+        }
+
+        .about-sidebar-section {
+            margin-bottom: 40px;
+        }
+
+        .about-sidebar-section:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ========================================
+           CONTACT
+           ======================================== */
+        .contact-content {
+            max-width: 600px;
+        }
+
+        .contact-content p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .contact-item {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            border-right: 1px solid var(--border);
+            background-color: var(--surface);
+        }
+
+        .contact-item:nth-child(even) {
+            border-right: none;
+        }
+
+        .contact-item:nth-last-child(-n+2) {
+            border-bottom: none;
+        }
+
+        .contact-item-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .contact-item-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .contact-item-value a {
+            color: var(--text-primary);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .contact-item-value a::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .contact-item-value a:hover::after {
+            width: 100%;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        /* ========================================
+           SCROLL REVEAL
+           ======================================== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ========================================
+           SCROLLBAR
+           ======================================== */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
-        
+
         ::-webkit-scrollbar-track {
-            background: var(--bg-color);
+            background: var(--bg);
         }
-        
+
         ::-webkit-scrollbar-thumb {
-            background: var(--text-dim);
-            border-radius: 4px;
+            background: #D0D0D0;
+            border-radius: 3px;
         }
-        
+
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-color);
+            background: #B0B0B0;
+        }
+
+        /* ========================================
+           RESPONSIVE — TABLET
+           ======================================== */
+        @media (max-width: 900px) {
+            :root {
+                --section-padding: 80px;
+            }
+
+            h1 {
+                font-size: clamp(32px, 4vw, 38px);
+            }
+
+            .hero-name {
+                font-size: clamp(24px, 2.2vw, 28px);
+            }
+
+            h2 {
+                font-size: 26px;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .expertise-col {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .expertise-col:last-child {
+                border-bottom: none;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .about-sidebar {
+                border-left: none;
+                padding-left: 0;
+                border-top: 1px solid var(--border);
+                padding-top: 40px;
+            }
+
+            .project-block {
+                padding: 32px;
+            }
+
+            .project-block-header {
+                flex-direction: column;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-card {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .blog-card:last-child {
+                border-bottom: none;
+            }
+
+            .ecosystem-terminal {
+                max-width: 100%;
+            }
+
+            .ecosystem-body {
+                grid-template-columns: 1fr;
+            }
+
+            .ecosystem-visual {
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.08);
+                min-height: 280px;
+            }
+
+            .ecosystem-text {
+                padding: 28px 24px;
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE — MOBILE
+           ======================================== */
+        @media (max-width: 640px) {
+            :root {
+                --section-padding: 64px;
+            }
+
+            h1 {
+                font-size: clamp(28px, 6vw, 36px);
+                letter-spacing: -0.03em;
+            }
+
+            .hero-name {
+                font-size: 22px;
+            }
+
+            h2 {
+                font-size: 22px;
+            }
+
+            .hero {
+                padding-top: 120px;
+                padding-bottom: 64px;
+            }
+
+            .hero-subtitle {
+                font-size: 15px;
+                max-width: 100%;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .hero-cta .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 64px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background-color: rgba(246, 247, 249, 0.98);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+                border-bottom: 1px solid var(--border);
+                padding: 24px;
+                gap: 20px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-mobile-toggle {
+                display: block;
+            }
+
+            .project-block {
+                padding: 24px;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-item {
+                border-right: none;
+            }
+
+            .contact-item:nth-last-child(-n+2) {
+                border-bottom: 1px solid var(--border);
+            }
+
+            .contact-item:last-child {
+                border-bottom: none;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
         }
     </style>
 </head>
+
 <body>
+
+    <!-- ============================
+         NAVIGATION
+         ============================ -->
     <nav>
-        <ul>
-            <li><a href="#home">home</a></li>
-            <li><a href="#about">about</a></li>
-            <li><a href="#skills">skills</a></li>
-            <li><a href="#projects">projects</a></li>
-            <li><a href="#experience">experience</a></li>
-            <li><a href="#blog">blog</a></li>
-            <li><a href="#contact">contact</a></li>
-            <li><a href="https://shahariar.iam.bd/CV/cv.pdf" target="_blank" rel="noopener">cv</a></li>
-        </ul>
+        <div class="nav-inner">
+            <a href="#" class="nav-name">SH</a>
+            <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#expertise">Expertise</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
     </nav>
-    
-    <section id="home" class="hero">
-        <pre class="ascii-art">
-███████╗██╗  ██╗ █████╗ ██╗  ██╗██████╗ ██╗ █████╗ ██████╗ 
-██╔════╝██║  ██║██╔══██╗██║  ██║██╔══██╗██║██╔══██╗██╔══██╗
-███████╗███████║███████║███████║██████╔╝██║███████║██████╔╝
-╚════██║██╔══██║██╔══██║██╔══██║██╔══██╗██║██╔══██║██╔══██╗
-███████║██║  ██║██║  ██║██║  ██║██║  ██║██║██║  ██║██║  ██║
-╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
-        </pre>
-        <h1 class="glow">Shahriar Hussain</h1>
-        <p>Backend Engineer specializing in <span class="accent glow-subtle">Python</span>, <span class="fastapi">DevOps</span> & <span class="django">Security</span></p>
-        
-        <div class="terminal">
-            <div class="terminal-header">
-                <div class="terminal-button terminal-close"></div>
-                <div class="terminal-button terminal-minimize"></div>
-                <div class="terminal-button terminal-expand"></div>
-                <span class="terminal-title">shahriar@secure-ops:~</span>
-            </div>
-            <div class="terminal-content">
-                <div class="terminal-line">
-                    <span class="terminal-prompt">shahriar@ops:~$</span>
-                    <span class="terminal-text">kubectl get pods -n production</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">NAME                    READY   STATUS    RESTARTS</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">api-server-7d8f9c      1/1     Running   0</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-prompt">shahriar@ops:~$</span>
-                    <span class="terminal-text">docker scan api-server:latest</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">[+] No vulnerabilities found</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-prompt">shahriar@ops:~$</span>
-                    <span class="terminal-text">terraform apply -auto-approve</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-output">Apply complete! Resources: 12 added, 0 changed</span>
-                </div>
-                <div class="terminal-line">
-                    <span class="terminal-prompt">shahriar@ops:~$</span>
-                    <span class="terminal-text">echo "Secure. Scalable. Automated."<span class="blink">_</span></span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="scroll-indicator">[ scroll down ]</div>
-    </section>
-    
-    <section id="about" class="section">
+
+    <!-- ============================
+         HERO
+         ============================ -->
+    <section class="hero" id="home">
         <div class="container">
-            <h2 class="section-title glow-subtle">ABOUT_ME</h2>
-            <div class="terminal">
-                <div class="terminal-header">
-                    <div class="terminal-button terminal-close"></div>
-                    <div class="terminal-button terminal-minimize"></div>
-                    <div class="terminal-button terminal-expand"></div>
-                    <span class="terminal-title">cat about.txt</span>
+            <div class="hero-content">
+                <p class="hero-category">Backend · DevOps · Security</p>
+                <p class="hero-name" role="heading" aria-level="2">
+                    Shahriar Hussain
+                </p>
+                <h1>Security-Focused<br>Backend Engineer</h1>
+                <p class="hero-subtitle">I design and deploy secure, scalable backend systems with automation-driven
+                    infrastructure and production-grade reliability.</p>
+                <div class="hero-cta">
+                    <a href="#projects" class="btn btn-primary">
+                        View Projects <span class="btn-arrow">→</span>
+                    </a>
+                    <a href="https://github.com/Shahriar-008" target="_blank" rel="noopener" class="btn btn-secondary">
+                        GitHub <span class="btn-arrow">↗</span>
+                    </a>
                 </div>
-                <div class="terminal-content">
-                    <div class="terminal-line">
-                        <span class="terminal-prompt">shahriar@ops:~$</span>
-                        <span class="terminal-text">cat ./about/profile.yml</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">---</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">Backend engineer with 5+ years of experience building</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">secure, scalable infrastructure and APIs.</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output"></span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">→ Backend: Python, FastAPI, Django, PostgreSQL</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">→ DevOps: Docker, Kubernetes, Terraform, CI/CD</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">→ Security: OWASP, Pentesting, Secure SDLC, IAM</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output"></span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">Building secure pipelines | Automating everything</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">---</span>
-                    </div>
-                    <div class="terminal-line">
-                        <span class="terminal-prompt">shahriar@ops:~$</span>
-                        <span class="terminal-text"><span class="blink">_</span></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="skills" class="section">
-        <div class="container">
-            <h2 class="section-title glow-subtle">TECH_STACK</h2>
-            <div class="skills">
-                <div class="skill-card">
-                    <h3>Python</h3>
-                    <p>Backend APIs, automation scripts, security tools, FastAPI & Django</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Container & Orchestration</h3>
-                    <p>Docker, Kubernetes, Helm, container security, microservices</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Infrastructure as Code</h3>
-                    <p>Terraform, Ansible, CloudFormation, GitOps, Pulumi</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Linux</h3>
-                    <p>System hardening, shell scripting, networking, services, monitoring</p>
-                </div>
-                <div class="skill-card">
-                    <h3>CI/CD Pipelines</h3>
-                    <p>GitHub Actions, GitLab CI, Jenkins, ArgoCD, secure pipelines</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Cloud Security</h3>
-                    <p>AWS/GCP hardening, IAM, secrets management, VPC, WAF</p>
-                </div>
-                <div class="skill-card">
-                    <h3>AppSec</h3>
-                    <p>OWASP Top 10, SAST/DAST, dependency scanning, secure coding</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Monitoring & Observability</h3>
-                    <p>Prometheus, Grafana, ELK Stack, Datadog, security logging</p>
-                </div>
-                <div class="skill-card">
-                    <h3>Databases</h3>
-                    <p>PostgreSQL, MongoDB, Redis, encryption at rest, backup strategies</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="projects" class="section">
-        <div class="container">
-            <h2 class="section-title glow-subtle">PROJECTS</h2>
-            <div class="projects">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-dot red"></div>
-                        <div class="project-dot yellow"></div>
-                        <div class="project-dot green"></div>
-                        <span class="project-title-bar">question_gen.py</span>
-                    </div>
-                    <div class="project-content">
-                        <h3>Question Generation Python Script</h3>
-                        <p>Python script for automated question generation, leveraging NLP techniques to create questions from text content.</p>
-                        <div class="project-links">
-                            <a href="https://github.com/Shahriar-008/question-generation-python-script" target="_blank">GitHub</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-dot red"></div>
-                        <div class="project-dot yellow"></div>
-                        <div class="project-dot green"></div>
-                        <span class="project-title-bar">lot_size_calc.py</span>
-                    </div>
-                    <div class="project-content">
-                        <h3>Forex Lot Size Calculator</h3>
-                        <p>A tool for calculating optimal lot sizes in Forex trading based on risk management parameters and account balance.</p>
-                        <div class="project-links">
-                            <a href="https://github.com/Shahriar-008/Forex-Lot-Size-Calculator" target="_blank">GitHub</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-header">
-                        <div class="project-dot red"></div>
-                        <div class="project-dot yellow"></div>
-                        <div class="project-dot green"></div>
-                        <span class="project-title-bar">prosno_io.py</span>
-                    </div>
-                    <div class="project-content">
-                        <h3>Prosno.io</h3>
-                        <p>A web application deployed on Render, providing interactive features and modern user experience.</p>
-                        <div class="project-links">
-                            <a href="https://prosno-io.onrender.com/" target="_blank">View Demo</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="experience" class="section">
-        <div class="container">
-            <h2 class="section-title glow-subtle">WORK_EXPERIENCE</h2>
-            <div class="experience">
-                <div class="experience-item">
-                    <h3>Senior Backend & DevSecOps Engineer</h3>
-                    <div class="company">TechCorp Inc.</div>
-                    <div class="date">2023 - Present</div>
-                    <p>Lead secure infrastructure initiatives and backend development. Implemented zero-trust architecture, automated security scanning in CI/CD, and reduced deployment time by 70% while maintaining SOC2 compliance.</p>
-                </div>
-                <div class="experience-item">
-                    <h3>DevOps Engineer</h3>
-                    <div class="company">CloudScale Systems</div>
-                    <div class="date">2020 - 2023</div>
-                    <p>Built and maintained Kubernetes clusters for 50+ microservices. Implemented GitOps workflows, infrastructure as code, and container security scanning reducing vulnerabilities by 85%.</p>
-                </div>
-                <div class="experience-item">
-                    <h3>Backend Developer</h3>
-                    <div class="company">StartupHub</div>
-                    <div class="date">2018 - 2020</div>
-                    <p>Developed secure APIs with Python/FastAPI. Implemented OAuth2, rate limiting, and input validation. Set up initial CI/CD pipelines and containerized all services.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <section id="blog" class="section">
-        <div class="container">
-            <h2 class="section-title glow-subtle">LATEST_BLOG_POSTS</h2>
-            <div class="blog-posts" id="blog-posts">
-                <div class="blog-loading" id="blog-loading">Fetching latest posts from shahariar.iam.bd...</div>
-            </div>
-            <div class="blog-visit-all">
-                <a href="https://shahariar.iam.bd/" target="_blank">Visit Full Blog</a>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="section">
+    <!-- ============================
+         EXPERTISE
+         ============================ -->
+    <section id="expertise" class="section-border">
         <div class="container">
-            <h2 class="section-title glow-subtle">CONTACT</h2>
-            <div class="contact-info">
-                <div class="contact-terminal">
-                    <div class="terminal-line">
-                        <span class="terminal-prompt">shahriar@ops:~$</span>
-                        <span class="terminal-text">cat contact.json</span>
+            <p class="section-label reveal">Core Expertise</p>
+            <h2 class="reveal" style="margin-bottom: 48px;">What I Work With</h2>
+            <div class="expertise-grid reveal">
+                <!-- Backend -->
+                <div class="expertise-col">
+                    <h3>Backend</h3>
+                    <p class="expertise-col-desc">Designing production-grade APIs, services, and data layers with
+                        security-first architecture.</p>
+                    <ul class="expertise-list">
+                        <li>Python &amp; FastAPI</li>
+                        <li>Django &amp; REST Framework</li>
+                        <li>PostgreSQL &amp; Redis</li>
+                        <li>Celery &amp; Task Queues</li>
+                        <li>GraphQL &amp; gRPC</li>
+                        <li>OAuth2 &amp; JWT Auth</li>
+                    </ul>
+                </div>
+                <!-- DevOps -->
+                <div class="expertise-col">
+                    <h3>DevOps</h3>
+                    <p class="expertise-col-desc">Automating infrastructure, deployments, and observability for reliable
+                        production systems.</p>
+                    <ul class="expertise-list">
+                        <li>Docker &amp; Kubernetes</li>
+                        <li>Terraform &amp; Ansible</li>
+                        <li>CI/CD Pipelines</li>
+                        <li>GitHub Actions &amp; GitLab CI</li>
+                        <li>Prometheus &amp; Grafana</li>
+                        <li>Linux Administration</li>
+                    </ul>
+                </div>
+                <!-- Security -->
+                <div class="expertise-col">
+                    <h3>Security</h3>
+                    <p class="expertise-col-desc">Embedding security into every layer — from code review to runtime
+                        monitoring.</p>
+                    <ul class="expertise-list">
+                        <li>OWASP Top 10 Mitigation</li>
+                        <li>SAST &amp; DAST Scanning</li>
+                        <li>Secrets Management</li>
+                        <li>IAM &amp; Zero-Trust</li>
+                        <li>Container Security</li>
+                        <li>Compliance &amp; Auditing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         PROJECTS
+         ============================ -->
+    <section id="projects" class="section-border">
+        <div class="container">
+            <p class="section-label reveal">Selected Work</p>
+            <h2 class="reveal" style="margin-bottom: 48px;">Projects</h2>
+
+            <div class="projects-list">
+
+                <!-- Project 1 -->
+                <div class="project-block reveal">
+                    <div class="project-block-header">
+                        <div>
+                            <h3 class="project-title">Prosno.io — Question Paper Platform</h3>
+                            <p class="project-summary">Full-stack SaaS application for automated question paper
+                                generation with auth, credit systems, and document export.</p>
+                        </div>
                     </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">{</span>
+                    <div class="project-stack">
+                        <span class="project-stack-tag">Python</span>
+                        <span class="project-stack-tag">Flask</span>
+                        <span class="project-stack-tag">PostgreSQL</span>
+                        <span class="project-stack-tag">Supabase Auth</span>
+                        <span class="project-stack-tag">Render</span>
                     </div>
-                    <div class="contact-line">
-                        <span class="prompt">  "email":</span>
-                        <span class="contact-item" tabindex="0" aria-label="Email: shahriar.hj2022@gmail.com">"shahriar.hj2022@gmail.com"</span>
+                    <ul class="project-impact">
+                        <li>Built full authentication flow with Google OAuth2 and session management via Supabase</li>
+                        <li>Implemented credit-based rate limiting system with tiered access control</li>
+                        <li>Automated DOCX and PDF generation pipeline with OMR sheet support</li>
+                        <li>Deployed on Render with CI/CD pipeline and environment-based configuration</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://prosno-io.onrender.com/" target="_blank" rel="noopener" class="project-link">
+                            Live <span class="project-link-arrow">↗</span>
+                        </a>
                     </div>
-                    <div class="contact-line">
-                        <span class="prompt">  "github":</span>
-                        <a class="contact-item" href="https://github.com/Shahriar-008" target="_blank" rel="noopener" aria-label="GitHub profile">"github.com/Shahriar-008"</a>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-block reveal">
+                    <div class="project-block-header">
+                        <div>
+                            <h3 class="project-title">Automated Question Generation Script</h3>
+                            <p class="project-summary">Python-based CLI tool for extracting and generating structured
+                                question sets from text content using NLP techniques.</p>
+                        </div>
                     </div>
-                    <div class="contact-line">
-                        <span class="prompt">  "linkedin":</span>
-                        <a class="contact-item" href="https://www.linkedin.com/in/md-shahriar-hussain-852002308/" target="_blank" rel="noopener" aria-label="LinkedIn profile">"linkedin.com/in/md-shahriar-hussain-852002308"</a>
+                    <div class="project-stack">
+                        <span class="project-stack-tag">Python</span>
+                        <span class="project-stack-tag">NLP</span>
+                        <span class="project-stack-tag">CLI</span>
+                        <span class="project-stack-tag">JSON Schema</span>
                     </div>
-                    <div class="contact-line">
-                        <span class="prompt">  "status":</span>
-                        <span class="contact-item" tabindex="0" aria-label="Status: Open for DevSecOps and Backend roles" style="color: var(--success-color);">"Open for DevSecOps & Backend roles"</span>
+                    <ul class="project-impact">
+                        <li>Designed structured JSON output format for consistent downstream consumption</li>
+                        <li>Implemented modular parsing pipeline with extensible question type support</li>
+                        <li>Reduced manual question creation time by automating extraction from raw text</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/Shahriar-008/question-generation-python-script" target="_blank"
+                            rel="noopener" class="project-link">
+                            GitHub <span class="project-link-arrow">↗</span>
+                        </a>
                     </div>
-                    <div class="terminal-line">
-                        <span class="terminal-output">}</span>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-block reveal">
+                    <div class="project-block-header">
+                        <div>
+                            <h3 class="project-title">Forex Lot Size Calculator</h3>
+                            <p class="project-summary">Precision risk management tool for calculating optimal position
+                                sizes in Forex trading based on configurable parameters.</p>
+                        </div>
                     </div>
-                    <div class="terminal-line" style="margin-top: 15px;">
-                        <span class="terminal-prompt">shahriar@ops:~$</span>
-                        <span class="terminal-text"><span class="blink">_</span></span>
+                    <div class="project-stack">
+                        <span class="project-stack-tag">Python</span>
+                        <span class="project-stack-tag">Financial Modeling</span>
+                        <span class="project-stack-tag">CLI</span>
+                    </div>
+                    <ul class="project-impact">
+                        <li>Implemented risk-based position sizing with configurable account balance and risk tolerance
+                        </li>
+                        <li>Supports multiple currency pairs with accurate pip value calculations</li>
+                        <li>Designed for reliability with input validation and edge case handling</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/Shahriar-008/Forex-Lot-Size-Calculator" target="_blank"
+                            rel="noopener" class="project-link">
+                            GitHub <span class="project-link-arrow">↗</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         ABOUT
+         ============================ -->
+    <section id="about" class="section-border">
+        <div class="container">
+            <p class="section-label reveal">About</p>
+            <h2 class="reveal" style="margin-bottom: 48px;">Engineering with a Security Mindset</h2>
+            <div class="about-content reveal">
+                <div class="about-text">
+                    <p>I approach backend engineering from a security-first perspective. Every system I build starts
+                        with threat modeling — identifying attack surfaces, enforcing least-privilege access, and
+                        ensuring data integrity at every layer. Security is not an afterthought; it is the foundation of
+                        reliable architecture.</p>
+                    <p>My work sits at the intersection of <strong>backend development</strong>, <strong>infrastructure
+                            automation</strong>, and <strong>operational security</strong>. I build APIs that handle
+                        production traffic with predictable performance, deploy infrastructure through code that can be
+                        audited and versioned, and integrate security scanning into CI/CD pipelines so vulnerabilities
+                        are caught before they reach production.</p>
+                    <p>I believe in <strong>automation over manual process</strong>. From infrastructure provisioning
+                        with Terraform to automated compliance checks and container scanning, I eliminate human error by
+                        codifying operational procedures. This approach reduces incident response time and ensures
+                        consistent, reproducible deployments across environments.</p>
+                    <p>Whether it is hardening a Kubernetes cluster, implementing zero-trust networking, or designing
+                        rate-limited API gateways — I build systems that are <strong>secure by default, observable in
+                            production, and resilient under load.</strong></p>
+                </div>
+                <div class="about-sidebar">
+                    <div class="about-sidebar-section">
+                        <h3>Focus Areas</h3>
+                        <ul class="about-sidebar-list">
+                            <li>Secure API Design</li>
+                            <li>Infrastructure as Code</li>
+                            <li>CI/CD Security</li>
+                            <li>Container Hardening</li>
+                            <li>Production Observability</li>
+                        </ul>
+                    </div>
+                    <div class="about-sidebar-section">
+                        <h3>Currently</h3>
+                        <ul class="about-sidebar-list">
+                            <li>Open for DevSecOps &amp; Backend roles</li>
+                            <li>Building production systems in Python</li>
+                            <li>Writing at shahariar.iam.bd</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
+
+    <!-- ============================
+         BLOG
+         ============================ -->
+    <section id="blog" class="section-border">
+        <div class="container">
+            <p class="section-label reveal">Latest Writing</p>
+            <h2 class="reveal" style="margin-bottom: 48px;">Blog</h2>
+            <div class="blog-grid reveal" id="blog-grid">
+                <div class="blog-loading" id="blog-loading">Loading posts...</div>
+            </div>
+            <div class="blog-visit-all reveal">
+                <a href="https://shahariar.iam.bd/" target="_blank" rel="noopener">View all posts <span
+                        style="margin-left:4px;">↗</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         BEYOND CODE
+         ============================ -->
+    <section class="ecosystem-section section-border">
+        <div class="container">
+            <p class="section-label reveal">Beyond Code</p>
+            <h2 class="reveal" style="margin-bottom: 48px;">Ecosystem</h2>
+            <div class="ecosystem-terminal reveal" id="ecosystem-terminal">
+                <div class="ecosystem-header">
+                    <div class="eco-dot"></div>
+                    <div class="eco-dot"></div>
+                    <div class="eco-dot"></div>
+                    <span class="ecosystem-header-label">shahriar@ecosystem:~$ ./ecosystem.sh</span>
+                </div>
+                <div class="ecosystem-body">
+                    <!-- LEFT: Terminal text -->
+                    <div class="ecosystem-text">
+                        <div class="eco-prompt"><span>$</span> cat ecosystem.log</div>
+                        <div class="eco-line"><strong>status:</strong> balanced</div>
+                        <div class="eco-line"><strong>uptime:</strong> continuous</div>
+                        <div class="eco-line"><strong>organisms:</strong> interdependent</div>
+                        <div class="eco-line"><strong>health_check:</strong> passing</div>
+                        <div class="eco-line"><strong>entropy:</strong> managed</div>
+                        <div class="eco-line"><strong>resilience:</strong> adaptive</div>
+                        <div class="eco-comment">// A stable ecosystem — like reliable infrastructure —<br>// is quiet
+                            when it works.</div>
+                        <div class="eco-cmd"><span>$</span> terraform apply ecosystem.tf</div>
+                        <div class="eco-cmd-output">Apply complete. Stability achieved.</div>
+                    </div>
+                    <!-- RIGHT: Aquarium -->
+                    <div class="ecosystem-visual">
+                        <svg id="eco-svg" viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg"
+                            preserveAspectRatio="xMidYMid slice">
+                            <defs>
+                                <!-- Subtle water gradient -->
+                                <linearGradient id="water-grad" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#141414" />
+                                    <stop offset="100%" stop-color="#111111" />
+                                </linearGradient>
+                                <!-- Top-left light for fish shading -->
+                                <linearGradient id="fish-highlight" x1="0" y1="0" x2="0.7" y2="1">
+                                    <stop offset="0%" stop-color="#666" />
+                                    <stop offset="100%" stop-color="#333" />
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Water fill -->
+                            <rect width="480" height="380" fill="url(#water-grad)" />
+
+                            <!-- Faint waterline -->
+                            <line x1="0" y1="1" x2="480" y2="1" stroke="#1e1e1e" stroke-width="0.5" opacity="0.3" />
+
+                            <!-- ===== BACKGROUND PLANTS ===== -->
+
+                            <!-- Back-left: Tall Rotala-style stems with curved leaves -->
+                            <g class="eco-plant-1" opacity="0.70">
+                                <!-- Main stem -->
+                                <path d="M48 370 Q44 330 50 290 Q46 260 49 230 Q47 210 49 185" stroke="#888"
+                                    stroke-width="1.4" fill="none" stroke-linecap="round" />
+                                <!-- Leaf pairs (curved elliptical) -->
+                                <ellipse cx="38" cy="290" rx="10" ry="4" fill="#777" opacity="0.85"
+                                    transform="rotate(-30 38 290)" />
+                                <ellipse cx="60" cy="270" rx="9" ry="3.5" fill="#777" opacity="0.8"
+                                    transform="rotate(25 60 270)" />
+                                <ellipse cx="36" cy="248" rx="8" ry="3" fill="#707070" opacity="0.75"
+                                    transform="rotate(-20 36 248)" />
+                                <ellipse cx="62" cy="230" rx="9" ry="3" fill="#707070" opacity="0.7"
+                                    transform="rotate(22 62 230)" />
+                                <ellipse cx="40" cy="210" rx="7" ry="2.5" fill="#666" opacity="0.65"
+                                    transform="rotate(-25 40 210)" />
+                                <ellipse cx="55" cy="195" rx="6" ry="2.5" fill="#666" opacity="0.6"
+                                    transform="rotate(15 55 195)" />
+                                <!-- Second stem nearby -->
+                                <path d="M62 370 Q58 338 64 305 Q60 280 63 260" stroke="#808080" stroke-width="1.2"
+                                    fill="none" stroke-linecap="round" />
+                                <ellipse cx="52" cy="310" rx="8" ry="3" fill="#777" opacity="0.75"
+                                    transform="rotate(-22 52 310)" />
+                                <ellipse cx="74" cy="290" rx="7" ry="3" fill="#707070" opacity="0.7"
+                                    transform="rotate(20 74 290)" />
+                                <ellipse cx="56" cy="270" rx="6" ry="2.5" fill="#666" opacity="0.65"
+                                    transform="rotate(-18 56 270)" />
+                            </g>
+
+                            <!-- Back-right: Tall stems with leaves -->
+                            <g class="eco-plant-2" opacity="0.65">
+                                <path d="M420 370 Q424 328 418 285 Q422 258 420 232 Q418 215 420 195" stroke="#888"
+                                    stroke-width="1.4" fill="none" stroke-linecap="round" />
+                                <ellipse cx="432" cy="295" rx="9" ry="3.5" fill="#777" opacity="0.8"
+                                    transform="rotate(28 432 295)" />
+                                <ellipse cx="408" cy="275" rx="8" ry="3" fill="#777" opacity="0.75"
+                                    transform="rotate(-22 408 275)" />
+                                <ellipse cx="432" cy="255" rx="8" ry="3" fill="#707070" opacity="0.7"
+                                    transform="rotate(20 432 255)" />
+                                <ellipse cx="410" cy="238" rx="7" ry="2.5" fill="#707070" opacity="0.65"
+                                    transform="rotate(-18 410 238)" />
+                                <ellipse cx="428" cy="218" rx="6" ry="2.5" fill="#666" opacity="0.6"
+                                    transform="rotate(15 428 218)" />
+                                <!-- Second stem -->
+                                <path d="M440 370 Q436 335 442 300 Q438 278 440 258" stroke="#808080" stroke-width="1.2"
+                                    fill="none" stroke-linecap="round" />
+                                <ellipse cx="452" cy="310" rx="7" ry="3" fill="#777" opacity="0.7"
+                                    transform="rotate(24 452 310)" />
+                                <ellipse cx="430" cy="288" rx="6" ry="2.5" fill="#707070" opacity="0.65"
+                                    transform="rotate(-20 430 288)" />
+                            </g>
+
+                            <!-- ===== MIDGROUND PLANTS (bush-like clusters) ===== -->
+
+                            <!-- Midground cluster — left -->
+                            <g class="eco-plant-3" opacity="0.80">
+                                <!-- Multiple clustered stems -->
+                                <path d="M90 370 Q86 342 92 315 Q88 298 90 280" stroke="#888" stroke-width="1.4"
+                                    fill="none" stroke-linecap="round" />
+                                <path d="M100 370 Q96 348 102 328 Q98 312 100 298" stroke="#808080" stroke-width="1.2"
+                                    fill="none" stroke-linecap="round" />
+                                <path d="M110 370 Q108 352 112 335 Q110 322 112 310" stroke="#787878" stroke-width="1"
+                                    fill="none" stroke-linecap="round" />
+                                <!-- Bush leaves (overlapping ellipses) -->
+                                <ellipse cx="78" cy="318" rx="10" ry="4.5" fill="#777" opacity="0.85"
+                                    transform="rotate(-25 78 318)" />
+                                <ellipse cx="105" cy="330" rx="9" ry="4" fill="#707070" opacity="0.8"
+                                    transform="rotate(18 105 330)" />
+                                <ellipse cx="82" cy="298" rx="9" ry="3.5" fill="#707070" opacity="0.75"
+                                    transform="rotate(-20 82 298)" />
+                                <ellipse cx="115" cy="315" rx="8" ry="3.5" fill="#666" opacity="0.7"
+                                    transform="rotate(22 115 315)" />
+                                <ellipse cx="90" cy="280" rx="8" ry="3" fill="#666" opacity="0.65"
+                                    transform="rotate(-15 90 280)" />
+                                <ellipse cx="100" cy="298" rx="7" ry="3" fill="#666" opacity="0.7"
+                                    transform="rotate(8 100 298)" />
+                                <ellipse cx="112" cy="310" rx="6" ry="2.5" fill="#606060" opacity="0.6"
+                                    transform="rotate(15 112 310)" />
+                            </g>
+
+                            <!-- Midground cluster — center-right -->
+                            <g class="eco-plant-4" opacity="0.75">
+                                <path d="M345 370 Q349 340 343 312 Q347 298 345 282" stroke="#888" stroke-width="1.3"
+                                    fill="none" stroke-linecap="round" />
+                                <path d="M358 370 Q354 345 360 322 Q356 308 358 295" stroke="#808080" stroke-width="1.1"
+                                    fill="none" stroke-linecap="round" />
+                                <path d="M370 370 Q366 350 372 332 Q368 320 370 308" stroke="#787878" stroke-width="1"
+                                    fill="none" stroke-linecap="round" />
+                                <ellipse cx="335" cy="315" rx="9" ry="4" fill="#777" opacity="0.8"
+                                    transform="rotate(-22 335 315)" />
+                                <ellipse cx="365" cy="325" rx="9" ry="3.5" fill="#707070" opacity="0.75"
+                                    transform="rotate(20 365 325)" />
+                                <ellipse cx="340" cy="298" rx="8" ry="3.5" fill="#707070" opacity="0.7"
+                                    transform="rotate(-18 340 298)" />
+                                <ellipse cx="375" cy="312" rx="8" ry="3" fill="#666" opacity="0.65"
+                                    transform="rotate(16 375 312)" />
+                                <ellipse cx="345" cy="282" rx="7" ry="3" fill="#666" opacity="0.6"
+                                    transform="rotate(-12 345 282)" />
+                                <ellipse cx="358" cy="295" rx="7" ry="2.5" fill="#666" opacity="0.65"
+                                    transform="rotate(5 358 295)" />
+                            </g>
+
+                            <!-- Small midground accent — center -->
+                            <g class="eco-plant-6" opacity="0.70">
+                                <path d="M230 370 Q228 348 232 328 Q230 318 232 308" stroke="#808080" stroke-width="1.1"
+                                    fill="none" stroke-linecap="round" />
+                                <ellipse cx="222" cy="330" rx="7" ry="3" fill="#707070" opacity="0.75"
+                                    transform="rotate(-20 222 330)" />
+                                <ellipse cx="242" cy="320" rx="7" ry="3" fill="#666" opacity="0.7"
+                                    transform="rotate(18 242 320)" />
+                                <ellipse cx="225" cy="312" rx="6" ry="2.5" fill="#606060" opacity="0.6"
+                                    transform="rotate(-15 225 312)" />
+                            </g>
+
+                            <!-- ===== FOREGROUND: Grass carpet ===== -->
+
+                            <!-- Substrate floor -->
+                            <rect x="0" y="355" width="480" height="25" fill="#1a1a1a" />
+                            <line x1="0" y1="355" x2="480" y2="355" stroke="#2a2a2a" stroke-width="0.5" />
+
+                            <!-- Grass blades — left cluster -->
+                            <g class="eco-plant-5" opacity="0.90">
+                                <path d="M20 370 Q16 354 22 338" stroke="#888" stroke-width="1.2" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M26 370 Q23 352 28 336" stroke="#808080" stroke-width="1" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M33 370 Q36 353 31 340" stroke="#888" stroke-width="1" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M39 370 Q42 356 37 342" stroke="#808080" stroke-width="0.9" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M45 370 Q48 358 43 344" stroke="#787878" stroke-width="0.9" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M14 370 Q10 356 16 342" stroke="#787878" stroke-width="0.8" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M50 370 Q53 356 48 343" stroke="#787878" stroke-width="0.8" fill="none"
+                                    stroke-linecap="round" />
+                            </g>
+
+                            <!-- Grass blades — center-left -->
+                            <g class="eco-plant-6" opacity="0.85">
+                                <path d="M160 370 Q157 354 162 338" stroke="#888" stroke-width="1" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M167 370 Q170 355 165 340" stroke="#808080" stroke-width="1" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M174 370 Q178 358 172 344" stroke="#808080" stroke-width="0.9" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M153 370 Q150 356 155 342" stroke="#787878" stroke-width="0.9" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M180 370 Q183 358 178 345" stroke="#787878" stroke-width="0.8" fill="none"
+                                    stroke-linecap="round" />
+                            </g>
+
+                            <!-- Grass blades — center -->
+                            <g class="eco-plant-5" opacity="0.80" style="animation-delay: 2.5s;">
+                                <path d="M240 370 Q237 354 242 338" stroke="#888" stroke-width="1" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M248 370 Q252 355 246 340" stroke="#808080" stroke-width="1" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M255 370 Q258 358 253 344" stroke="#808080" stroke-width="0.9" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M234 370 Q230 356 236 342" stroke="#787878" stroke-width="0.9" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M262 370 Q264 356 260 343" stroke="#787878" stroke-width="0.8" fill="none"
+                                    stroke-linecap="round" />
+                            </g>
+
+                            <!-- Grass blades — right cluster -->
+                            <g class="eco-plant-5" opacity="0.85" style="animation-delay: 3s;">
+                                <path d="M425 370 Q422 356 427 342" stroke="#888" stroke-width="1" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M432 370 Q436 354 430 340" stroke="#808080" stroke-width="1" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M440 370 Q443 358 438 344" stroke="#808080" stroke-width="0.9" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M418 370 Q414 357 420 344" stroke="#787878" stroke-width="0.9" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M448 370 Q450 358 446 346" stroke="#787878" stroke-width="0.8" fill="none"
+                                    stroke-linecap="round" />
+                                <path d="M455 370 Q458 357 453 344" stroke="#787878" stroke-width="0.8" fill="none"
+                                    stroke-linecap="round" />
+                            </g>
+
+                            <!-- ===== PEARLING BUBBLES ===== -->
+                            <circle class="eco-bubble-1" cx="49" cy="188" r="3" fill="#bbb" />
+                            <circle class="eco-bubble-2" cx="62" cy="262" r="2.5" fill="#aaa" />
+                            <circle class="eco-bubble-3" cx="420" cy="198" r="2.8" fill="#b0b0b0" />
+                            <circle class="eco-bubble-4" cx="442" cy="260" r="2.5" fill="#aaa" />
+                            <circle class="eco-bubble-5" cx="92" cy="282" r="3" fill="#b0b0b0" />
+                            <circle class="eco-bubble-6" cx="112" cy="312" r="2.5" fill="#aaa" />
+                            <circle class="eco-bubble-7" cx="345" cy="284" r="2.8" fill="#b0b0b0" />
+                            <circle class="eco-bubble-8" cx="232" cy="310" r="2.5" fill="#aaa" />
+                            <circle class="eco-bubble-9" cx="167" cy="340" r="2.5" fill="#a0a0a0" />
+
+                            <!-- ===== BETTA FISH (JS-driven position) ===== -->
+                            <g id="eco-fish">
+                                <!-- Container: JS sets translate(x, y) and rotation -->
+
+                                <!-- Flowing tail fin (layered, semi-transparent) -->
+                                <g class="eco-fish-tail">
+                                    <!-- Outer tail veil — starts inside body for seamless overlap -->
+                                    <path
+                                        d="M-12 0 C-22 -16, -38 -42, -58 -32 C-48 -16, -44 -5, -62 5 C-44 18, -48 28, -58 38 C-38 28, -22 16, -12 0 Z"
+                                        fill="#454545" opacity="0.6" />
+                                    <!-- Mid tail layer -->
+                                    <path
+                                        d="M-12 0 C-18 -11, -32 -22, -44 -12 C-38 -5, -36 0, -48 10 C-32 22, -18 12, -12 0 Z"
+                                        fill="#505050" opacity="0.55" />
+                                    <!-- Inner tail highlight -->
+                                    <path
+                                        d="M-10 0 C-14 -6, -22 -12, -32 -6 C-28 -2, -26 0, -32 6 C-22 12, -14 6, -10 0 Z"
+                                        fill="#5a5a5a" opacity="0.35" />
+                                    <!-- Veil trailing edges -->
+                                    <path d="M-12 -2 Q-32 -28 -54 -38" stroke="#555" stroke-width="0.4" fill="none"
+                                        opacity="0.3" />
+                                    <path d="M-12 0 Q-38 -4 -62 5" stroke="#555" stroke-width="0.4" fill="none"
+                                        opacity="0.3" />
+                                    <path d="M-12 2 Q-32 28 -54 38" stroke="#555" stroke-width="0.4" fill="none"
+                                        opacity="0.3" />
+                                </g>
+
+                                <!-- Ventral & Anal fin (flowing bottom veil) -->
+                                <g class="eco-fish-ventral">
+                                    <path d="M-2 6 Q-16 32 -10 48 Q5 36 16 22 Q19 36 26 42 Q26 26 20 12 Z"
+                                        fill="#4a4a4a" opacity="0.6" />
+                                    <path d="M16 18 Q26 42 20 56" stroke="#5a5a5a" stroke-width="0.5" fill="none"
+                                        opacity="0.35" />
+                                </g>
+
+                                <!-- Dorsal fin -->
+                                <g class="eco-fish-dorsal">
+                                    <path d="M-2 -6 Q-16 -28 -22 -42 Q-6 -32 10 -22 Q20 -28 26 -18 Q16 -6 10 -5 Z"
+                                        fill="#4a4a4a" opacity="0.6" />
+                                    <path d="M8 -16 Q-6 -36 -18 -46" stroke="#5a5a5a" stroke-width="0.4" fill="none"
+                                        opacity="0.3" />
+                                </g>
+
+                                <!-- Main body — top highlight from upper-left -->
+                                <path
+                                    d="M32 0 C36 -6, 22 -13, 6 -11 C-8 -9, -14 -3, -14 0 C-14 3, -8 9, 6 11 C22 13, 36 6, 32 0 Z"
+                                    fill="#404040" opacity="0.92" />
+                                <!-- Lighter belly highlight (upper-left light) -->
+                                <path
+                                    d="M30 -1 C34 -4, 20 -10, 6 -9 C-6 -7, -10 -2, -10 0 C-10 1, -6 4, 6 5 C18 6, 30 2, 30 -1 Z"
+                                    fill="#505050" opacity="0.6" />
+                                <!-- Subtle body stripe (lateral line) -->
+                                <path d="M-8 0 Q10 -1 28 0" stroke="#5a5a5a" stroke-width="0.3" fill="none"
+                                    opacity="0.4" />
+
+                                <!-- Scale texture (very subtle) -->
+                                <path d="M-4 -5 Q10 -9 22 -5" stroke="#5a5a5a" stroke-width="0.25" fill="none"
+                                    opacity="0.3" />
+                                <path d="M-4 5 Q10 9 22 5" stroke="#5a5a5a" stroke-width="0.25" fill="none"
+                                    opacity="0.3" />
+
+                                <!-- Pectoral fin -->
+                                <g class="eco-fish-pectoral">
+                                    <path d="M16 4 Q6 14 10 22 Q18 16 22 6 Z" fill="#585858" opacity="0.45" />
+                                    <path d="M18 6 Q10 16 13 26" stroke="#666" stroke-width="0.35" fill="none"
+                                        opacity="0.3" />
+                                </g>
+
+                                <!-- Head / gill structure -->
+                                <path d="M20 -9 Q28 0 20 9 Z" fill="#484848" opacity="0.45" />
+                                <path d="M22 -6 Q25 0 22 6" stroke="#555" stroke-width="0.4" fill="none"
+                                    opacity="0.5" />
+
+                                <!-- Eye -->
+                                <circle cx="27" cy="-2" r="2" fill="#111" />
+                                <circle cx="27" cy="-2" r="1.2" fill="#1a1a1a" />
+                                <!-- Eye highlight dot -->
+                                <circle cx="27.5" cy="-2.8" r="0.55" fill="#bbb" />
+
+                                <!-- Mouth -->
+                                <path d="M32 -1 Q34 0.5 32 2" stroke="#555" stroke-width="0.4" fill="none" />
+                            </g>
+
+                            <!-- Faint depth lines -->
+                            <line x1="0" y1="120" x2="480" y2="120" stroke="#171717" stroke-width="0.3"
+                                opacity="0.25" />
+                            <line x1="0" y1="240" x2="480" y2="240" stroke="#171717" stroke-width="0.3"
+                                opacity="0.18" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         CONTACT
+         ============================ -->
+    <section id="contact" class="section-border">
+        <div class="container">
+            <p class="section-label reveal">Contact</p>
+            <h2 class="reveal" style="margin-bottom: 16px;">Get in Touch</h2>
+            <div class="contact-content reveal">
+                <p>Interested in working together or have a question about my work? Reach out through any of the
+                    channels below.</p>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <div class="contact-item-label">Email</div>
+                        <div class="contact-item-value">
+                            <a href="mailto:shahriar.hj2022@gmail.com">shahriar.hj2022@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-label">GitHub</div>
+                        <div class="contact-item-value">
+                            <a href="https://github.com/Shahriar-008" target="_blank" rel="noopener">Shahriar-008</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-label">LinkedIn</div>
+                        <div class="contact-item-value">
+                            <a href="https://www.linkedin.com/in/md-shahriar-hussain-852002308/" target="_blank"
+                                rel="noopener">Shahriar Hussain</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-item-label">Status</div>
+                        <div class="contact-item-value">Open for opportunities</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================
+         FOOTER
+         ============================ -->
     <footer>
         <div class="container">
-            <div class="social-links">
-                <a href="https://github.com/Shahriar-008" target="_blank">GitHub</a>
-                <a href="https://www.linkedin.com/in/md-shahriar-hussain-852002308/" target="_blank">LinkedIn</a>
-                <a href="https://x.com/Shahriarhj" target="_blank">Twitter</a>
-                <a href="https://dev.to/shahriar" target="_blank">Dev.to</a>
+            <div class="footer-inner">
+                <p class="footer-copy">&copy; 2025 Shahriar Hussain</p>
+                <ul class="footer-links">
+                    <li><a href="https://github.com/Shahriar-008" target="_blank" rel="noopener">GitHub</a></li>
+                    <li><a href="https://www.linkedin.com/in/md-shahriar-hussain-852002308/" target="_blank"
+                            rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://x.com/Shahriarhj" target="_blank" rel="noopener">Twitter</a></li>
+                    <li><a href="https://dev.to/shahriar" target="_blank" rel="noopener">Dev.to</a></li>
+                    <li><a href="https://shahariar.iam.bd/" target="_blank" rel="noopener">Blog</a></li>
+                </ul>
             </div>
-            <p>/* &copy; 2025 Shahriar Hussain | Secure by design. Automated by default. */</p>
         </div>
     </footer>
 
+    <!-- ============================
+         SCRIPTS
+         ============================ -->
     <script>
-        // Smooth scrolling for navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+        // Mobile navigation toggle
+        const navToggle = document.getElementById('nav-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile nav on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
-                if (!href || !href.startsWith('#')) {
-                    return;
-                }
+                if (!href || href === '#') return;
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    const navHeight = 64;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
                 }
             });
         });
 
-        // Add reveal animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
+        // Scroll reveal animation
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
                 }
             });
-        }, observerOptions);
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -40px 0px'
+        });
 
-        document.querySelectorAll('.skill-card, .project-card, .experience-item, .blog-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
         });
 
         // Fetch blog posts from RSS feed
-        async function fetchBlogPosts() {
-            const blogContainer = document.getElementById('blog-posts');
+        (async function fetchBlogPosts() {
+            const blogGrid = document.getElementById('blog-grid');
             const loadingEl = document.getElementById('blog-loading');
 
-            // Fallback posts from the blog repo
             const fallbackPosts = [
                 {
                     title: 'Started Learning Python Today!',
                     date: 'Jan 15, 2025',
-                    excerpt: 'Today marks an exciting milestone in my programming journey — I started learning Python! Python is one of the most popular and beginner-friendly programming languages...',
+                    excerpt: 'Today marks an exciting milestone in my programming journey — I started learning Python, one of the most popular and beginner-friendly programming languages...',
                     url: 'https://shahariar.iam.bd/posts/started-learning-python/',
-                    categories: ['programming', 'learning'],
-                    file: 'python_journey.md'
+                    categories: ['programming', 'learning']
                 },
                 {
                     title: 'Welcome to My Blog',
                     date: 'Jan 13, 2025',
-                    excerpt: 'Thank you for visiting my blog! I\'m excited to share this space with you where I\'ll be documenting my journey, insights, and learnings...',
+                    excerpt: 'Thank you for visiting my blog! I\'m excited to share this space where I\'ll be documenting my journey, insights, and learnings...',
                     url: 'https://shahariar.iam.bd/posts/this-is-my-first/',
-                    categories: ['general', 'introduction'],
-                    file: 'welcome.md'
+                    categories: ['general']
                 }
             ];
 
@@ -1240,41 +2201,28 @@
                 posts.forEach(post => {
                     const card = document.createElement('div');
                     card.className = 'blog-card';
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
 
                     const tagsHtml = (post.categories || []).map(tag =>
-                        `<span class="blog-tag">${tag}</span>`
+                        `<span class="blog-card-tag">${tag}</span>`
                     ).join('');
 
                     card.innerHTML = `
-                        <div class="blog-card-header">
-                            <div class="project-dot red"></div>
-                            <div class="project-dot yellow"></div>
-                            <div class="project-dot green"></div>
-                            <span class="blog-card-title-bar">${post.file || 'post.md'}</span>
-                        </div>
-                        <div class="blog-card-content">
-                            <h3>${post.title}</h3>
-                            <div class="blog-card-date">${post.date}</div>
-                            <div class="blog-card-tags">${tagsHtml}</div>
-                            <p class="blog-card-excerpt">${post.excerpt}</p>
-                            <a href="${post.url}" target="_blank" class="blog-card-link">Read Post</a>
-                        </div>
+                        <div class="blog-card-date">${post.date}</div>
+                        <h3><a href="${post.url}" target="_blank" rel="noopener">${post.title}</a></h3>
+                        ${tagsHtml ? `<div class="blog-card-tags">${tagsHtml}</div>` : ''}
+                        <p class="blog-card-excerpt">${post.excerpt}</p>
+                        <a href="${post.url}" target="_blank" rel="noopener" class="blog-card-link">Read post →</a>
                     `;
-                    blogContainer.appendChild(card);
+                    blogGrid.appendChild(card);
+                });
 
-                    // Trigger animation
-                    requestAnimationFrame(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    });
+                // Re-observe new blog cards for reveal
+                blogGrid.querySelectorAll('.blog-card').forEach(el => {
+                    revealObserver.observe(el);
                 });
             }
 
             try {
-                // Try fetching RSS feed via rss2json API
                 const response = await fetch(
                     'https://api.rss2json.com/v1/api.json?rss_url=' +
                     encodeURIComponent('https://shahariar.iam.bd/feed.xml')
@@ -1282,19 +2230,13 @@
                 const data = await response.json();
 
                 if (data.status === 'ok' && data.items && data.items.length > 0) {
-                    const posts = data.items.slice(0, 6).map(item => {
-                        // Strip HTML tags from description
+                    const posts = data.items.slice(0, 3).map(item => {
                         const tmp = document.createElement('div');
                         tmp.innerHTML = item.description || '';
                         let excerpt = tmp.textContent || tmp.innerText || '';
-                        excerpt = excerpt.substring(0, 200).trim();
-                        if (excerpt.length >= 200) excerpt += '...';
+                        excerpt = excerpt.substring(0, 160).trim();
+                        if (excerpt.length >= 160) excerpt += '...';
 
-                        // Extract filename from link
-                        const urlParts = item.link.split('/');
-                        const slug = urlParts.filter(p => p).pop() || 'post';
-
-                        // Format date
                         const dateObj = new Date(item.pubDate);
                         const dateStr = dateObj.toLocaleDateString('en-US', {
                             year: 'numeric', month: 'short', day: 'numeric'
@@ -1305,8 +2247,7 @@
                             date: dateStr,
                             excerpt: excerpt,
                             url: item.link,
-                            categories: item.categories || [],
-                            file: slug + '.md'
+                            categories: item.categories || []
                         };
                     });
                     renderPosts(posts);
@@ -1317,24 +2258,364 @@
                 console.log('RSS fetch failed, using fallback posts:', error);
                 renderPosts(fallbackPosts);
             }
-        }
+        })();
 
-        fetchBlogPosts();
+        // ═══════════════════════════════════════════
+        // ECOSYSTEM: Betta Fish State-Machine Animation
+        // ═══════════════════════════════════════════
+        (function () {
+            const terminal = document.getElementById('ecosystem-terminal');
+            const fishEl = document.getElementById('eco-fish');
+            const svgEl = document.getElementById('eco-svg');
+            if (!terminal || !fishEl || !svgEl) return;
 
-        // Random glitch effect on title
-        const glitchText = document.querySelector('.hero h1');
-        setInterval(() => {
-            if (Math.random() > 0.95) {
-                glitchText.style.textShadow = `
-                    ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 rgba(255, 0, 0, 0.3),
-                    ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 rgba(0, 255, 0, 0.3),
-                    ${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 rgba(0, 0, 255, 0.3)
-                `;
-                setTimeout(() => {
-                    glitchText.style.textShadow = '0 0 5px var(--accent-glow), 0 0 10px var(--accent-glow), 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow)';
-                }, 100);
+            terminal.classList.add('paused');
+
+            // ── Constants ──
+            const VB_W = 480, VB_H = 380;
+            const PAD = 55;                              // keep fish away from edges
+            const MIN_X = PAD, MAX_X = VB_W - PAD;
+            const MIN_Y = 30, MAX_Y = 335;              // above substrate
+            const CENTER_X = VB_W / 2, CENTER_Y = 180;  // default resting center
+
+            // Plant cluster centers (for investigate state)
+            const PLANTS = [
+                { x: 55, y: 280 },   // back-left Rotala
+                { x: 100, y: 310 },  // midground left bush
+                { x: 232, y: 320 },  // center accent
+                { x: 355, y: 300 },  // midground right bush
+                { x: 430, y: 270 },  // back-right stems
+            ];
+
+            // ── Fish State ──
+            let x = CENTER_X, y = CENTER_Y;
+            let targetX = x, targetY = y;
+            let angle = 0;                               // body rotation in degrees
+            let facingRight = true;
+            let speed = 0;                               // pixels per second
+            let visible = false;
+            let rafId = null;
+            let lastTime = 0;
+
+            // State machine
+            const STATES = { GLIDE: 'glide', HOVER: 'hover', INVESTIGATE: 'investigate', SURFACE: 'surfaceCheck', DART: 'dart' };
+            let state = STATES.HOVER;
+            let stateTimer = 0;       // seconds remaining in current state
+            let hoverDuration = 0;
+            let investigatePlant = null;
+            let investigatePhase = 0; // 0=approach, 1=hover, 2=circle
+            let circleAngle = 0;
+            let lastDartTime = 0;
+            let lastInvestigateTime = 0;
+            let lastSurfaceTime = 0;
+
+            // Cursor tracking
+            let cursorSvgX = -1, cursorSvgY = -1;
+            let cursorActive = false;
+            let cursorCooldown = 0;
+
+            // ── Utility ──
+            function rand(a, b) { return a + Math.random() * (b - a); }
+            function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+            function dist(ax, ay, bx, by) { return Math.sqrt((ax - bx) ** 2 + (ay - by) ** 2); }
+            function lerp(a, b, t) { return a + (b - a) * t; }
+            function lerpAngle(a, b, t) {
+                let d = b - a;
+                if (d > 180) d -= 360;
+                if (d < -180) d += 360;
+                return a + d * t;
             }
-        }, 100);
+
+            function pickRandomTarget() {
+                return {
+                    x: rand(MIN_X, MAX_X),
+                    y: rand(MIN_Y + 20, MAX_Y - 20)
+                };
+            }
+
+            // ── State Transitions ──
+            function enterGlide() {
+                state = STATES.GLIDE;
+                const t = pickRandomTarget();
+                targetX = t.x;
+                targetY = t.y;
+                speed = rand(30, 55); // calm glide
+                terminal.style.setProperty('--fin-speed', '1.4s');
+            }
+
+            function enterHover() {
+                state = STATES.HOVER;
+                hoverDuration = rand(1, 2.5);
+                stateTimer = hoverDuration;
+                speed = 0;
+                terminal.style.setProperty('--fin-speed', '2s');
+            }
+
+            function enterInvestigate() {
+                state = STATES.INVESTIGATE;
+                lastInvestigateTime = performance.now() / 1000;
+                investigatePlant = PLANTS[Math.floor(Math.random() * PLANTS.length)];
+                investigatePhase = 0;
+                // Approach plant
+                targetX = investigatePlant.x + rand(-15, 15);
+                targetY = investigatePlant.y + rand(-10, 10);
+                targetX = clamp(targetX, MIN_X, MAX_X);
+                targetY = clamp(targetY, MIN_Y, MAX_Y);
+                speed = rand(25, 40);
+                circleAngle = Math.atan2(y - investigatePlant.y, x - investigatePlant.x);
+                terminal.style.setProperty('--fin-speed', '1.6s');
+            }
+
+            function enterSurfaceCheck() {
+                state = STATES.SURFACE;
+                lastSurfaceTime = performance.now() / 1000;
+                targetX = x + rand(-20, 20);
+                targetY = rand(MIN_Y, MIN_Y + 30); // near surface
+                targetX = clamp(targetX, MIN_X, MAX_X);
+                speed = rand(20, 35);
+                stateTimer = 0;
+                terminal.style.setProperty('--fin-speed', '1.8s');
+            }
+
+            function enterDart() {
+                state = STATES.DART;
+                lastDartTime = performance.now() / 1000;
+                const t = pickRandomTarget();
+                targetX = t.x;
+                targetY = t.y;
+                speed = rand(180, 280); // quick burst
+                stateTimer = rand(0.25, 0.45);
+                terminal.style.setProperty('--fin-speed', '0.5s');
+            }
+
+            // ── Decide Next State ──
+            function decideNextState() {
+                const now = performance.now() / 1000;
+                const sinceInvestigate = now - lastInvestigateTime;
+                const sinceSurface = now - lastSurfaceTime;
+                const sinceDart = now - lastDartTime;
+
+                // Dart: rare, max once every 20-30s
+                if (sinceDart > rand(20, 30) && Math.random() < 0.15) {
+                    enterDart();
+                    return;
+                }
+
+                // Surface check: every 18-30s
+                if (sinceSurface > rand(18, 30) && Math.random() < 0.3) {
+                    enterSurfaceCheck();
+                    return;
+                }
+
+                // Investigate: every 8-14s
+                if (sinceInvestigate > rand(8, 14) && Math.random() < 0.4) {
+                    enterInvestigate();
+                    return;
+                }
+
+                // Default: glide or hover
+                if (Math.random() < 0.5) {
+                    enterGlide();
+                } else {
+                    enterHover();
+                }
+            }
+
+            // ── Animation Loop ──
+            function update(timestamp) {
+                if (!visible) { rafId = null; return; }
+
+                const dt = lastTime ? Math.min((timestamp - lastTime) / 1000, 0.1) : 0.016;
+                lastTime = timestamp;
+
+                // ── Cursor curiosity ──
+                if (cursorCooldown > 0) cursorCooldown -= dt;
+                if (cursorActive && cursorCooldown <= 0) {
+                    const d = dist(x, y, cursorSvgX, cursorSvgY);
+                    if (d < 120 && d > 15) {
+                        // Gently drift toward cursor
+                        targetX = lerp(targetX, cursorSvgX, 0.02);
+                        targetY = lerp(targetY, cursorSvgY, 0.02);
+                        targetX = clamp(targetX, MIN_X, MAX_X);
+                        targetY = clamp(targetY, MIN_Y, MAX_Y);
+                        if (state === STATES.HOVER) {
+                            speed = 20;
+                        }
+                    }
+                }
+
+                // ── State logic ──
+                switch (state) {
+                    case STATES.GLIDE: {
+                        const d = dist(x, y, targetX, targetY);
+                        if (d < 5) {
+                            enterHover();
+                        }
+                        break;
+                    }
+
+                    case STATES.HOVER: {
+                        stateTimer -= dt;
+                        // Subtle drift while hovering
+                        x += Math.sin(timestamp / 800) * 0.08;
+                        y += Math.cos(timestamp / 1100) * 0.06;
+                        if (stateTimer <= 0) {
+                            decideNextState();
+                        }
+                        break;
+                    }
+
+                    case STATES.INVESTIGATE: {
+                        const d = dist(x, y, targetX, targetY);
+                        if (investigatePhase === 0 && d < 12) {
+                            // Arrived near plant — hover close
+                            investigatePhase = 1;
+                            stateTimer = rand(1.2, 2);
+                            speed = 0;
+                        } else if (investigatePhase === 1) {
+                            stateTimer -= dt;
+                            // Tiny drift near plant
+                            x += Math.sin(timestamp / 600) * 0.1;
+                            y += Math.cos(timestamp / 900) * 0.08;
+                            if (stateTimer <= 0) {
+                                // Small circle around plant
+                                investigatePhase = 2;
+                                stateTimer = rand(2.5, 4);
+                                speed = 18;
+                            }
+                        } else if (investigatePhase === 2) {
+                            stateTimer -= dt;
+                            const radius = 25;
+                            circleAngle += dt * 0.8; // slow orbit
+                            targetX = clamp(investigatePlant.x + Math.cos(circleAngle) * radius, MIN_X, MAX_X);
+                            targetY = clamp(investigatePlant.y + Math.sin(circleAngle) * radius, MIN_Y, MAX_Y);
+                            if (stateTimer <= 0) {
+                                decideNextState();
+                            }
+                        }
+                        break;
+                    }
+
+                    case STATES.SURFACE: {
+                        const d = dist(x, y, targetX, targetY);
+                        if (d < 8 && stateTimer === 0) {
+                            // Reached surface — pause then return
+                            stateTimer = rand(0.8, 1.5);
+                            speed = 0;
+                        }
+                        if (stateTimer > 0) {
+                            stateTimer -= dt;
+                            // Tiny bob
+                            y += Math.sin(timestamp / 400) * 0.12;
+                            if (stateTimer <= 0) {
+                                // Return to mid-water
+                                targetX = rand(MIN_X + 40, MAX_X - 40);
+                                targetY = rand(CENTER_Y - 40, CENTER_Y + 40);
+                                speed = rand(25, 40);
+                                state = STATES.GLIDE;
+                                terminal.style.setProperty('--fin-speed', '1.4s');
+                            }
+                        }
+                        break;
+                    }
+
+                    case STATES.DART: {
+                        stateTimer -= dt;
+                        if (stateTimer <= 0) {
+                            // Immediately calm down
+                            speed = rand(15, 30);
+                            enterHover();
+                        }
+                        break;
+                    }
+                }
+
+                // ── Move toward target ──
+                if (speed > 0) {
+                    const dx = targetX - x;
+                    const dy = targetY - y;
+                    const d = Math.sqrt(dx * dx + dy * dy);
+                    if (d > 1) {
+                        const step = Math.min(speed * dt, d);
+                        x += (dx / d) * step;
+                        y += (dy / d) * step;
+                    }
+                }
+
+                // Clamp to bounds
+                x = clamp(x, MIN_X, MAX_X);
+                y = clamp(y, MIN_Y, MAX_Y);
+
+                // ── Facing direction ──
+                const dx = targetX - x;
+                if (Math.abs(dx) > 2) {
+                    facingRight = dx > 0;
+                }
+
+                // ── Body sway (±1° slowly) ──
+                const sway = Math.sin(timestamp / 1200) * 0.8 + Math.sin(timestamp / 1900) * 0.3;
+
+                // ── Movement angle (pitch toward target) ──
+                const dy = targetY - y;
+                const moveAngle = speed > 5 ? Math.atan2(dy, Math.abs(dx)) * (180 / Math.PI) * 0.3 : 0;
+
+                // Smooth rotation
+                const targetAngle = moveAngle + sway;
+                angle = lerpAngle(angle, targetAngle, dt * 3);
+
+                // ── Apply transform ──
+                const scaleX = facingRight ? 1 : -1;
+                fishEl.setAttribute('transform',
+                    `translate(${x.toFixed(1)}, ${y.toFixed(1)}) scale(${scaleX}, 1) rotate(${angle.toFixed(1)})`
+                );
+
+                rafId = requestAnimationFrame(update);
+            }
+
+            // ── Cursor Tracking ──
+            svgEl.addEventListener('mousemove', function (e) {
+                const pt = svgEl.createSVGPoint();
+                pt.x = e.clientX;
+                pt.y = e.clientY;
+                const svgP = pt.matrixTransform(svgEl.getScreenCTM().inverse());
+                cursorSvgX = svgP.x;
+                cursorSvgY = svgP.y;
+                cursorActive = true;
+            });
+
+            svgEl.addEventListener('mouseleave', function () {
+                cursorActive = false;
+                cursorCooldown = 1.5; // short cooldown so fish doesn't snap back
+            });
+
+            svgEl.style.cursor = 'default';
+
+            // ── Visibility Observer ──
+            const observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        terminal.classList.remove('paused');
+                        visible = true;
+                        lastTime = 0;
+                        if (!rafId) {
+                            decideNextState();
+                            rafId = requestAnimationFrame(update);
+                        }
+                    } else {
+                        terminal.classList.add('paused');
+                        visible = false;
+                        if (rafId) {
+                            cancelAnimationFrame(rafId);
+                            rafId = null;
+                        }
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            observer.observe(terminal);
+        })();
     </script>
+
 </body>
+
 </html>
